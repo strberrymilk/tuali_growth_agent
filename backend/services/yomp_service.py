@@ -63,6 +63,7 @@ def _safe_find_many(collection_name: str, tuali_cliente_id: str) -> tuple[list[d
     try:
         collection = get_yomp_collection(collection_name)
         documents = list(collection.find(_build_client_query(tuali_cliente_id), {"_id": 0}))
+        documents = list(collection.find({"tuali_cliente_id": tuali_cliente_id}, {"_id": 0}))
         if documents:
             return documents, "db"
     except (ValueError, PyMongoError):
@@ -74,6 +75,7 @@ def _safe_find_one(collection_name: str, tuali_cliente_id: str) -> tuple[dict[st
     try:
         collection = get_yomp_collection(collection_name)
         document = collection.find_one(_build_client_query(tuali_cliente_id), {"_id": 0})
+        document = collection.find_one({"tuali_cliente_id": tuali_cliente_id}, {"_id": 0})
         if document:
             return document, "db"
     except (ValueError, PyMongoError):

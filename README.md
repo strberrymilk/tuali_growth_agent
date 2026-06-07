@@ -57,15 +57,12 @@ Files and folders that should stay out of version control, such as virtual envir
 
 ## MongoDB Setup
 
-Tuali and Yomp are configured as separate MongoDB clusters.
-
-Use these variables in `.env`:
+For ALY and YOMP on separate MongoDB clusters, use one URI and one database name for each service in `.env`:
 
 ```env
-MONGODB_URI_ALY=mongodb+srv://<user>:<password>@<tuali-cluster>/?retryWrites=true&w=majority
+MONGODB_URI_ALY=mongodb+srv://<user>:<password>@<aly-cluster-url>/?retryWrites=true&w=majority
+MONGODB_URI_YOMP=mongodb+srv://<user>:<password>@<yomp-cluster-url>/?retryWrites=true&w=majority
 MONGODB_ALY=aly_ai
-
-MONGODB_URI_YOMP=mongodb+srv://<user>:<password>@<yomp-cluster>/?retryWrites=true&w=majority
 MONGODB_YOMP=yomp_pos_db
 ```
 
@@ -109,6 +106,8 @@ GET /agent/recommendations/{tuali_cliente_id}
 GET /tts/test-page
 POST /tts/generate
 POST /tts/preview
+POST /tts/voice-to-voice
+GET /tts/files/{filename}
 GET /yomp/{tuali_cliente_id}/transactions
 GET /yomp/{tuali_cliente_id}/inventory
 GET /yomp/{tuali_cliente_id}/daily-sales
@@ -128,6 +127,7 @@ To test ElevenLabs text-to-speech, set these variables in `.env`:
 ELEVENLABS_API_KEY=your_api_key
 ELEVENLABS_VOICE_ID=JBFqnCBsd6RMkjVDRZzb
 ELEVENLABS_MODEL_ID=eleven_multilingual_v2
+ELEVENLABS_STS_MODEL_ID=eleven_multilingual_sts_v2
 ```
 
 Local SDK demo:
@@ -174,3 +174,4 @@ Current MCP-like tools include:
 - `get_yomp_growth_context(tuali_cliente_id)`
 - `save_recommendation(tuali_cliente_id, recommendation)`
 - `get_recommendations(tuali_cliente_id)`
+Voice-to-voice endpoint expects an uploaded audio file and returns a generated MP3 path plus a download URL.

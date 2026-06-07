@@ -1,8 +1,11 @@
-from fastapi import APIRouter, HTTPException
-from fastapi.responses import HTMLResponse, Response
+from pathlib import Path
+
+from fastapi import APIRouter, File, Form, HTTPException, UploadFile
+from fastapi.responses import FileResponse, HTMLResponse, Response
 from pydantic import BaseModel
 
 from backend.services.tts_service import generate_elevenlabs_speech_bytes, generate_tts
+from backend.services.tts_service import generate_elevenlabs_speech_bytes, generate_voice_to_voice
 
 
 router = APIRouter(prefix="/tts", tags=["tts"])
@@ -139,17 +142,36 @@ def generate_tts_preview(payload: TTSRequest) -> Response:
     return Response(content=audio, media_type="audio/mpeg")
 
 
-@router.post("/generate")
-def generate_tts_file(payload: TTSRequest) -> dict[str, str]:
+@router.post("/voice-to-voice")
+async def generate_voice_to_voice_preview(
+    audio: UploadFile = File(...),
+    voice_id: str | None = Form(default=None),
+) -> dict[str, str]:
     try:
-        file_path = generate_tts(payload.text)
+        audio_bytes = await audio.read()
+        file_path = generate_voice_to_voice(
+            audio_bytes=audio_bytes,
+            source_filename=audio.filename or "input_audio.webm",
+            content_type=audio.content_type,
+            voice_id=voice_id,
+        )
     except ValueError as error:
         raise HTTPException(status_code=400, detail=str(error)) from error
     except Exception as error:
         raise HTTPException(status_code=502, detail=f"ElevenLabs request failed: {error}") from error
 
+    output = Path(file_path)
     return {
-        "status": "success",
-        "message": "Audio generated successfully.",
         "file_path": file_path,
+        "filename": output.name,
+        "download_url": f"/tts/files/{output.name}",
     }
+
+
+@router.get("/files/{filename}")
+def get_generated_audio_file(filename: str) -> FileResponse:
+    file_path = Path(__file__).resolve().parents[2] / "generated_audio" / filename
+    if not file_path.exists():
+        raise HTTPException(status_code=404, detail="Generated audio file not found.")
+
+    return FileResponse(path=file_path, media_type="audio/mpeg", filename=filename)
