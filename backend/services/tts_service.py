@@ -11,7 +11,7 @@ load_dotenv()
 
 
 ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY", "")
-ELEVENLABS_VOICE_ID = os.getenv("ELEVENLABS_VOICE_ID", "JBFqnCBsd6RMkjVDRZzb")
+ELEVENLABS_VOICE_ID = os.getenv("ELEVENLABS_VOICE_ID", "iBGVhgcEZS6A5gTOjqSJ")
 ELEVENLABS_MODEL_ID = os.getenv("ELEVENLABS_MODEL_ID", "eleven_multilingual_v2")
 AUDIO_OUTPUT_DIR = Path(__file__).resolve().parents[2] / "generated_audio"
 

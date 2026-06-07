@@ -169,7 +169,7 @@ export default function App() {
 
   async function sendChatMessage(customText) {
     const text = (customText ?? chatInput).trim()
-    if (!text || !agentResult || chatLoading) {
+    if (!text || chatLoading) {
       return
     }
 
@@ -188,7 +188,7 @@ export default function App() {
         },
         body: JSON.stringify({
           message: text,
-          report_context: agentResult,
+          report_context: agentResult ?? {},
           history: nextHistory
             .filter((message) => message.role === "user" || message.role === "assistant")
             .map((message) => ({
