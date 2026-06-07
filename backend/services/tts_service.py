@@ -51,3 +51,19 @@ def generate_tts(text: str) -> str:
 def generate_elevenlabs_speech_bytes(text: str) -> bytes:
     audio = _convert_text_to_speech(text)
     return b"".join(chunk for chunk in audio if isinstance(chunk, bytes))
+
+class VoiceRequest(BaseModel):
+    texto_gancho: str
+
+@router.post("/speak")
+def generar_voz_agente(payload: VoiceRequest):
+    """
+    Recibe el 'gancho' generado por Gemini y lo convierte en bytes de audio
+    usando ElevenLabs para que el usuario escuche a su asesor.
+    """
+    try:
+        # Reutiliza tu lógica existente de tts_service.py
+        audio_bytes = generate_elevenlabs_speech_bytes(payload.texto_gancho)[cite: 6]
+        return Response(content=audio_bytes, media_type="audio/mpeg")[cite: 1]
+    except Exception as error:
+        raise HTTPException(status_code=502, detail=f"Error con ElevenLabs: {error}")[cite: 1]
