@@ -61,10 +61,7 @@ function LiquidBackground() {
 
 function GlassCard({ children, style = {}, onClick, onMouseEnter, onMouseLeave }) {
   return (
-    <div
-      onClick={onClick}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+    <div onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}
       style={{
         background: "rgba(255,255,255,0.25)",
         backdropFilter: "blur(32px) saturate(180%)",
@@ -114,14 +111,11 @@ function PaginaInicio({ onAllie }) {
                 {tab}
               </button>
             ))}
-            <button
-              onClick={onAllie}
+            <button onClick={onAllie}
               style={{background: "rgba(255,255,255,0.22)", border: "1px solid rgba(255,255,255,0.55)", borderRadius: "8px", color: "white", padding: "6px 16px", fontSize: "14px", fontWeight: "700", cursor: "pointer", fontFamily: "Nunito, sans-serif", transition: "all 0.2s"}}
               onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.38)"}
               onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.22)"}
-            >
-              ✨ Allie
-            </button>
+            >✨ Allie</button>
           </div>
         </div>
         <div style={{display: "flex", alignItems: "center", gap: "12px"}}>
@@ -153,8 +147,7 @@ function PaginaInicio({ onAllie }) {
         </div>
 
         <div style={{display: "grid", gridTemplateColumns: "2fr 1fr", gap: "20px", marginBottom: "24px"}}>
-          <div
-            onClick={onAllie}
+          <div onClick={onAllie}
             style={{background: "linear-gradient(135deg, #fff0f0, #fff5ee)", borderRadius: "20px", padding: "36px", border: "2px solid rgba(228,0,43,0.1)", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", transition: "all 0.2s ease"}}
             onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.01)"; e.currentTarget.style.boxShadow = "0 16px 50px rgba(228,0,43,0.15)" }}
             onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "none" }}
@@ -251,42 +244,22 @@ function PantallaBienvenido({ onNext }) {
           100% { opacity:1; transform:translateY(0) scale(1); }
         }
       `}</style>
-
       <div style={{textAlign:"center",color:"white",width:"100%",padding:"0 32px"}}>
         <h1 style={{
-          fontSize:"clamp(76px,13vw,170px)",
-          fontWeight:"950",
-          letterSpacing:"-8px",
-          lineHeight:"0.9",
-          margin:0,
-          color:"white",
-          animation: phase === "logo"
-            ? "logoIntro 1s cubic-bezier(0.16,1,0.3,1) forwards"
-            : "logoMoveUp 1s cubic-bezier(0.16,1,0.3,1) forwards",
-        }}>
-          tuali
-        </h1>
-
+          fontSize:"clamp(76px,13vw,170px)", fontWeight:"950", letterSpacing:"-8px",
+          lineHeight:"0.9", margin:0, color:"white",
+          animation: phase === "logo" ? "logoIntro 1s cubic-bezier(0.16,1,0.3,1) forwards" : "logoMoveUp 1s cubic-bezier(0.16,1,0.3,1) forwards",
+        }}>tuali</h1>
         {phase === "start" && (
           <div style={{marginTop:"-20px",animation:"contentUp 1s cubic-bezier(0.16,1,0.3,1) forwards"}}>
             <p style={{fontSize:"clamp(24px,3.5vw,44px)",fontWeight:"500",lineHeight:"1.25",maxWidth:"680px",margin:"0 auto 42px",color:"white"}}>
               Empecemos con tu análisis de negocio
             </p>
-            <button
-              onClick={onNext}
-              style={{
-                background:"white",color:"#E4002B",border:"none",borderRadius:"999px",
-                padding:"16px 46px",fontSize:"18px",fontWeight:"800",
-                cursor:"pointer",fontFamily:"Nunito,sans-serif",
-                boxShadow:"0 18px 50px rgba(0,0,0,0.2)",
-                animation:"buttonUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.15s both",
-                transition:"transform 0.2s ease",
-              }}
+            <button onClick={onNext}
+              style={{background:"white",color:"#E4002B",border:"none",borderRadius:"999px",padding:"16px 46px",fontSize:"18px",fontWeight:"800",cursor:"pointer",fontFamily:"Nunito,sans-serif",boxShadow:"0 18px 50px rgba(0,0,0,0.2)",animation:"buttonUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.15s both",transition:"transform 0.2s ease"}}
               onMouseEnter={e => e.currentTarget.style.transform="scale(1.05)"}
               onMouseLeave={e => e.currentTarget.style.transform="scale(1)"}
-            >
-              Continuar →
-            </button>
+            >Continuar →</button>
           </div>
         )}
       </div>
@@ -295,24 +268,19 @@ function PantallaBienvenido({ onNext }) {
 }
 
 function PantallaHerramientas({ onNext }) {
-  const btnBase = {
-    width:"100%", padding:"15px 18px", borderRadius:"14px",
-    border:"1px solid rgba(255,255,255,0.35)",
-    background:"rgba(255,255,255,0.15)",
-    backdropFilter:"blur(16px)",
-    WebkitBackdropFilter:"blur(16px)",
-    color:"white", fontWeight:"600", fontSize:"15px",
-    cursor:"pointer", fontFamily:"Nunito,sans-serif", transition:"all 0.2s",
-    textAlign:"left", display:"flex", alignItems:"center", justifyContent:"space-between",
-    boxShadow:"inset 0 1px 0 rgba(255,255,255,0.4)"
-  }
+  const [selected, setSelected] = useState(null)
+
+  const opciones = [
+    { id: "tuali", label: "Continuar solo con Tuali", primary: true },
+    { id: "yomp", label: "Yomp!" },
+    { id: "terminal", label: "Terminal de pago" },
+    { id: "manual", label: "Ingresar datos manualmente" },
+  ]
 
   return (
     <div style={{position:"fixed",inset:0,zIndex:50,overflow:"hidden"}}>
       <style>{`@keyframes fadeInUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}`}</style>
-
       <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg, #E4002B 0%, #F16321 60%, #FFB800 100%)"}}/>
-
       <div style={{position:"relative",zIndex:1,height:"100%",display:"flex",alignItems:"center",justifyContent:"center"}}>
         <div style={{
           background:"rgba(255,255,255,0.15)",
@@ -320,8 +288,8 @@ function PantallaHerramientas({ onNext }) {
           WebkitBackdropFilter:"blur(32px) saturate(180%)",
           border:"1px solid rgba(255,255,255,0.4)",
           borderRadius:"24px",
-          boxShadow:"0 8px 32px rgba(0,0,0,0.12), inset 0 1.5px 0 rgba(255,255,255,0.7), inset 0 -1px 0 rgba(255,255,255,0.2)",
-          padding:"40px",maxWidth:"500px",width:"90%",
+          boxShadow:"0 8px 32px rgba(0,0,0,0.12), inset 0 1.5px 0 rgba(255,255,255,0.7)",
+          padding:"40px", maxWidth:"500px", width:"90%",
           animation:"fadeInUp 0.6s ease forwards"
         }}>
           <div style={{display:"flex",alignItems:"center",gap:"10px",marginBottom:"10px"}}>
@@ -334,23 +302,61 @@ function PantallaHerramientas({ onNext }) {
             ¿Te gustaría complementar el análisis con alguna de estas herramientas de ventas?
           </p>
           <div style={{display:"flex",flexDirection:"column",gap:"10px"}}>
-            <button
-              onClick={onNext}
-              style={{...btnBase,background:"white",color:"#E4002B",border:"none",fontWeight:"700",boxShadow:"0 8px 24px rgba(0,0,0,0.15)"}}
-              onMouseEnter={e => e.currentTarget.style.transform="scale(1.02)"}
-              onMouseLeave={e => e.currentTarget.style.transform="scale(1)"}
-            >
-              <span>Continuar solo con Tuali</span><span>→</span>
-            </button>
-            {["Yomp!","Terminal de pago","Ingresar datos manualmente"].map(opt => (
-              <button key={opt} style={btnBase}
-                onMouseEnter={e => e.currentTarget.style.background="rgba(255,255,255,0.28)"}
-                onMouseLeave={e => e.currentTarget.style.background="rgba(255,255,255,0.15)"}
+            {opciones.map(opt => (
+              <button
+                key={opt.id}
+                onClick={() => {
+                  setSelected(opt.id)
+                  if (opt.id === "tuali") setTimeout(() => onNext(), 300)
+                }}
+                style={{
+                  width:"100%", padding:"15px 18px", borderRadius:"14px",
+                  border: selected === opt.id ? "none" : "1px solid rgba(255,255,255,0.4)",
+                  background: selected === opt.id ? "white" : "rgba(255,255,255,0.15)",
+                  backdropFilter:"blur(16px)",
+                  color: selected === opt.id ? "#E4002B" : "white",
+                  fontWeight: selected === opt.id ? "700" : "600",
+                  fontSize:"15px", cursor:"pointer",
+                  fontFamily:"Nunito,sans-serif", transition:"all 0.2s",
+                  textAlign:"left", display:"flex", alignItems:"center", justifyContent:"space-between",
+                  boxShadow: selected === opt.id ? "0 8px 24px rgba(0,0,0,0.15)" : "inset 0 1px 0 rgba(255,255,255,0.4)"
+                }}
+                onMouseEnter={e => {
+                  if (selected !== opt.id) {
+                    e.currentTarget.style.background = "rgba(255,255,255,0.35)"
+                    e.currentTarget.style.transform = "scale(1.02)"
+                  }
+                }}
+                onMouseLeave={e => {
+                  if (selected !== opt.id) {
+                    e.currentTarget.style.background = "rgba(255,255,255,0.15)"
+                    e.currentTarget.style.transform = "scale(1)"
+                  }
+                }}
               >
-                <span>{opt}</span><span style={{color:"rgba(255,255,255,0.7)"}}>→</span>
+                <span>{opt.label}</span>
+                <span style={{color: selected === opt.id ? "#E4002B" : "rgba(255,255,255,0.8)"}}>→</span>
               </button>
             ))}
           </div>
+
+          {selected && selected !== "tuali" && (
+            <button
+              onClick={onNext}
+              style={{
+                marginTop:"16px", width:"100%", padding:"14px",
+                borderRadius:"14px", border:"none",
+                background:"white", color:"#E4002B",
+                fontWeight:"700", fontSize:"15px",
+                cursor:"pointer", fontFamily:"Nunito,sans-serif",
+                transition:"all 0.2s", boxShadow:"0 8px 24px rgba(0,0,0,0.15)"
+              }}
+              onMouseEnter={e => e.currentTarget.style.transform="scale(1.02)"}
+              onMouseLeave={e => e.currentTarget.style.transform="scale(1)"}
+            >
+              Continuar →
+            </button>
+          )}
         </div>
       </div>
     </div>
@@ -359,105 +365,80 @@ function PantallaHerramientas({ onNext }) {
 
 function PantallaProcesando() {
   return (
-    <div style={{
-      position: "fixed",
-      inset: 0,
-      background: "white",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      zIndex: 50
-    }}>
+    <div style={{position:"fixed",inset:0,background:"white",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",zIndex:50}}>
       <style>{`
-        .fluid-orb-wrapper { position:relative; width:300px; height:300px; display:flex; align-items:center; justify-content:center; }
-        .fluid-orb-glow { position:absolute; width:360px; height:360px; border-radius:999px; background:radial-gradient(circle,rgba(255,184,0,0.45),rgba(241,99,33,0.25),rgba(228,0,43,0.12),transparent 70%); filter:blur(45px); animation:glowBreath 4s ease-in-out infinite; }
-        .fluid-orb { position:relative; width:250px; height:250px; overflow:hidden; border-radius:54% 46% 48% 52% / 48% 55% 45% 52%; background: radial-gradient(circle at 32% 62%,rgba(220,40,130,0.82),transparent 34%), radial-gradient(circle at 48% 48%,rgba(255,75,120,0.74),transparent 40%), radial-gradient(circle at 35% 32%,rgba(255,140,20,0.85),transparent 34%), radial-gradient(circle at 72% 35%,rgba(255,225,120,0.82),transparent 42%), radial-gradient(circle at 75% 72%,rgba(255,240,160,0.72),transparent 44%); filter:blur(0.2px); animation:orbMorph 7s ease-in-out infinite,orbFloat 8s ease-in-out infinite; box-shadow:0 24px 90px rgba(228,0,43,0.18),0 0 110px rgba(255,184,0,0.25); }
-        .fluid-orb::before { content:""; position:absolute; inset:-35%; background: radial-gradient(circle at 42% 55%,rgba(255,40,130,0.75),transparent 30%), radial-gradient(circle at 35% 28%,rgba(255,130,20,0.85),transparent 28%), radial-gradient(circle at 76% 32%,rgba(255,230,120,0.80),transparent 42%); filter:blur(22px); animation:innerFlowA 5.5s ease-in-out infinite; mix-blend-mode:screen; }
-        .fluid-orb::after { content:""; position:absolute; inset:-30%; background: radial-gradient(circle at 55% 55%,rgba(220,60,150,0.65),transparent 36%), radial-gradient(circle at 75% 38%,rgba(255,220,95,0.74),transparent 44%); filter:blur(26px); animation:innerFlowB 6.8s ease-in-out infinite; mix-blend-mode:multiply; }
-        .orb-soft-mask { position:absolute; inset:0; border-radius:inherit; background:radial-gradient(circle at 50% 50%,transparent 30%,rgba(255,255,255,0.18) 100%); pointer-events:none; }
-
-        @keyframes orbMorph {
-          0%{border-radius:52% 48% 45% 55%/50% 45% 55% 50%}
-          25%{border-radius:58% 42% 54% 46%/42% 58% 45% 55%}
-          50%{border-radius:45% 55% 60% 40%/58% 42% 52% 48%}
-          75%{border-radius:60% 40% 42% 58%/45% 55% 58% 42%}
-          100%{border-radius:52% 48% 45% 55%/50% 45% 55% 50%}
-        }
-
-        @keyframes orbFloat {
-          0%,100%{transform:translateY(0) scale(1)}
-          50%{transform:translateY(-8px) scale(1.03)}
-        }
-
-        @keyframes innerFlowA {
-          0%{transform:translate(-12%,6%) rotate(0deg) scale(1)}
-          50%{transform:translate(12%,-10%) rotate(55deg) scale(1.25)}
-          100%{transform:translate(-12%,6%) rotate(0deg) scale(1)}
-        }
-
-        @keyframes innerFlowB {
-          0%{transform:translate(10%,-6%) rotate(0deg) scale(1.1)}
-          50%{transform:translate(-12%,12%) rotate(-70deg) scale(1.35)}
-          100%{transform:translate(10%,-6%) rotate(0deg) scale(1.1)}
-        }
-
-        @keyframes glowBreath {
-          0%,100%{opacity:0.52;transform:scale(0.95)}
-          50%{opacity:0.85;transform:scale(1.12)}
-        }
-
-        @keyframes fadeInUp {
-          from{opacity:0;transform:translateY(18px)}
-          to{opacity:1;transform:translateY(0)}
-        }
+        .fluid-orb-wrapper{position:relative;width:300px;height:300px;display:flex;align-items:center;justify-content:center}
+        .fluid-orb-glow{position:absolute;width:360px;height:360px;border-radius:999px;background:radial-gradient(circle,rgba(255,184,0,0.45),rgba(241,99,33,0.25),rgba(228,0,43,0.12),transparent 70%);filter:blur(45px);animation:glowBreath 4s ease-in-out infinite}
+        .fluid-orb{position:relative;width:250px;height:250px;overflow:hidden;border-radius:54% 46% 48% 52%/48% 55% 45% 52%;background:radial-gradient(circle at 32% 62%,rgba(228,0,43,0.9),transparent 34%),radial-gradient(circle at 48% 48%,rgba(241,99,33,0.85),transparent 40%),radial-gradient(circle at 35% 32%,rgba(228,0,43,0.9),transparent 34%),radial-gradient(circle at 72% 35%,rgba(255,140,0,0.82),transparent 42%),radial-gradient(circle at 75% 72%,rgba(241,99,33,0.72),transparent 44%);filter:blur(0.2px);animation:orbMorph 7s ease-in-out infinite,orbFloat 8s ease-in-out infinite;box-shadow:0 24px 90px rgba(228,0,43,0.3),0 0 110px rgba(241,99,33,0.2)}
+        .fluid-orb::before{content:"";position:absolute;inset:-35%;background:radial-gradient(circle at 42% 55%,rgba(228,0,43,0.85),transparent 30%),radial-gradient(circle at 35% 28%,rgba(255,100,0,0.85),transparent 28%),radial-gradient(circle at 76% 32%,rgba(255,150,0,0.80),transparent 42%);filter:blur(22px);animation:innerFlowA 5.5s ease-in-out infinite;mix-blend-mode:screen}
+        .fluid-orb::after{content:"";position:absolute;inset:-30%;background:radial-gradient(circle at 55% 55%,rgba(228,0,43,0.75),transparent 36%),radial-gradient(circle at 75% 38%,rgba(255,120,0,0.74),transparent 44%);filter:blur(26px);animation:innerFlowB 6.8s ease-in-out infinite;mix-blend-mode:multiply}
+        .orb-soft-mask{position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle at 50% 50%,transparent 30%,rgba(255,255,255,0.18) 100%);pointer-events:none}
+        @keyframes orbMorph{0%{border-radius:52% 48% 45% 55%/50% 45% 55% 50%}25%{border-radius:58% 42% 54% 46%/42% 58% 45% 55%}50%{border-radius:45% 55% 60% 40%/58% 42% 52% 48%}75%{border-radius:60% 40% 42% 58%/45% 55% 58% 42%}100%{border-radius:52% 48% 45% 55%/50% 45% 55% 50%}}
+        @keyframes orbFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.03)}}
+        @keyframes innerFlowA{0%{transform:translate(-12%,6%) rotate(0deg) scale(1)}50%{transform:translate(12%,-10%) rotate(55deg) scale(1.25)}100%{transform:translate(-12%,6%) rotate(0deg) scale(1)}}
+        @keyframes innerFlowB{0%{transform:translate(10%,-6%) rotate(0deg) scale(1.1)}50%{transform:translate(-12%,12%) rotate(-70deg) scale(1.35)}100%{transform:translate(10%,-6%) rotate(0deg) scale(1.1)}}
+        @keyframes glowBreath{0%,100%{opacity:0.52;transform:scale(0.95)}50%{opacity:0.85;transform:scale(1.12)}}
+        @keyframes fadeInUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
       `}</style>
-
       <div className="fluid-orb-wrapper">
-        <div className="fluid-orb-glow" />
-        <div className="fluid-orb">
-          <div className="orb-soft-mask" />
-        </div>
+        <div className="fluid-orb-glow"/>
+        <div className="fluid-orb"><div className="orb-soft-mask"/></div>
       </div>
-
-      <div style={{
-        textAlign: "center",
-        marginTop: "42px",
-        animation: "fadeInUp 0.8s ease 0.3s both"
-      }}>
-        <p style={{
-          fontSize: "22px",
-          fontWeight: "800",
-          color: "#1A1A1A",
-          marginBottom: "10px"
-        }}>
-          Estoy generando tu análisis de negocio
-        </p>
-
-        <p style={{
-          fontSize: "15px",
-          color: "#777"
-        }}>
-          Esto tomará solo unos segundos
-        </p>
+      <div style={{textAlign:"center",marginTop:"42px",animation:"fadeInUp 0.8s ease 0.3s both"}}>
+        <p style={{fontSize:"22px",fontWeight:"800",color:"#1A1A1A",marginBottom:"10px"}}>Estoy generando tu análisis de negocio</p>
+        <p style={{fontSize:"15px",color:"#777"}}>Esto tomará solo unos segundos</p>
       </div>
     </div>
   )
 }
+
+const CATEGORIES = [
+  {
+    id: "ventas",
+    label: "📈 Aumentar ventas",
+    functional: true,
+    examples: [
+      "Quiero que cada cliente me compre más por visita",
+      "Quiero vender más de mis productos estrella",
+      "Quiero atraer clientes nuevos a mi tienda",
+    ]
+  },
+  {
+    id: "estabilidad",
+    label: "🛡️ Mantenerme estable",
+    functional: false,
+    examples: [
+      "No quiero quedarme sin stock de mis básicos",
+      "Quiero ahorrar en mis compras sin vender menos",
+      "Quiero aprovechar la quincena o fin de semana",
+    ]
+  },
+  {
+    id: "entender",
+    label: "📊 Entender mi negocio",
+    functional: false,
+    examples: [
+      "¿Qué productos me conviene empezar a vender?",
+      "¿Qué pasó con mis ventas este mes?",
+      "¿Cómo me comparo con tiendas similares?",
+    ]
+  },
+]
 
 function PantallaChat() {
   const [messages, setMessages] = useState([])
   const [input, setInput] = useState("")
   const [isTyping, setIsTyping] = useState(false)
   const [started, setStarted] = useState(false)
+  const [category, setCategory] = useState(null)
   const bottomRef = useRef(null)
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages, isTyping])
 
-  const handleSend = () => {
-    const msg = input.trim()
+  const handleSend = (text) => {
+    const msg = text || input.trim()
     if (!msg) return
     setInput("")
     setStarted(true)
@@ -465,7 +446,7 @@ function PantallaChat() {
     setIsTyping(true)
     setTimeout(() => {
       setIsTyping(false)
-      setMessages(prev => [...prev, { from: "allie", text: "Entendido, voy a trabajar en eso para ti." }])
+      setMessages(prev => [...prev, { from: "allie", text: "Entendido, voy a analizar eso y crear tu plan personalizado basado en tu historial de Tuali. 🚀" }])
     }, 1800)
   }
 
@@ -476,151 +457,133 @@ function PantallaChat() {
   return (
     <div style={{position:"fixed",inset:0,display:"flex",flexDirection:"column",zIndex:50,background:"white",overflow:"hidden"}}>
       <style>{`
-        @keyframes fadeInUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
-        @keyframes typingDot { 0%,80%,100%{transform:scale(0.6);opacity:0.3} 40%{transform:scale(1);opacity:1} }
-
-        @keyframes intenseRibbonOne {
-          0% {
-            transform: translate3d(-12%, -12%, 0) rotate(-8deg) scaleX(1);
-            background-position: 0% 50%;
-          }
-          50% {
-            transform: translate3d(10%, 6%, 0) rotate(-2deg) scaleX(1.16);
-            background-position: 100% 50%;
-          }
-          100% {
-            transform: translate3d(-6%, 10%, 0) rotate(-13deg) scaleX(1.05);
-            background-position: 0% 50%;
-          }
-        }
-
-        @keyframes intenseRibbonTwo {
-          0% {
-            transform: translate3d(10%, 8%, 0) rotate(7deg) scaleX(1.05);
-            background-position: 100% 50%;
-          }
-          50% {
-            transform: translate3d(-10%, -8%, 0) rotate(1deg) scaleX(1.24);
-            background-position: 0% 50%;
-          }
-          100% {
-            transform: translate3d(6%, -4%, 0) rotate(11deg) scaleX(1.08);
-            background-position: 100% 50%;
-          }
-        }
-
-        @keyframes intenseRibbonThree {
-          0% {
-            transform: translate3d(-4%, 0%, 0) rotate(-4deg) scaleX(1);
-            opacity: 0.9;
-          }
-          50% {
-            transform: translate3d(6%, -5%, 0) rotate(4deg) scaleX(1.18);
-            opacity: 1;
-          }
-          100% {
-            transform: translate3d(-8%, 4%, 0) rotate(-7deg) scaleX(1.04);
-            opacity: 0.95;
-          }
-        }
-
-        .chat-msg { animation: fadeInUp 0.3s ease forwards; }
-        .typing-dot { width:7px;height:7px;border-radius:50%;background:#ccc;display:inline-block;margin:0 2px;animation:typingDot 1.2s ease-in-out infinite; }
+        @keyframes fadeInUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes fadeInDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes typingDot{0%,80%,100%{transform:scale(0.6);opacity:0.3}40%{transform:scale(1);opacity:1}}
+        @keyframes ribbon1{0%{transform:translate3d(-12%,-12%,0) rotate(-8deg) scaleX(1)}50%{transform:translate3d(10%,6%,0) rotate(-2deg) scaleX(1.16)}100%{transform:translate3d(-6%,10%,0) rotate(-13deg) scaleX(1.05)}}
+        @keyframes ribbon2{0%{transform:translate3d(10%,8%,0) rotate(7deg) scaleX(1.05)}50%{transform:translate3d(-10%,-8%,0) rotate(1deg) scaleX(1.24)}100%{transform:translate3d(6%,-4%,0) rotate(11deg) scaleX(1.08)}}
+        @keyframes ribbon3{0%{transform:translate3d(-4%,0%,0) rotate(-4deg) scaleX(1);opacity:0.9}50%{transform:translate3d(6%,-5%,0) rotate(4deg) scaleX(1.18);opacity:1}100%{transform:translate3d(-8%,4%,0) rotate(-7deg) scaleX(1.04);opacity:0.95}}
+        .chat-msg{animation:fadeInUp 0.3s ease forwards}
+        .typing-dot{width:7px;height:7px;border-radius:50%;background:#ccc;display:inline-block;margin:0 2px;animation:typingDot 1.2s ease-in-out infinite}
         .typing-dot:nth-child(2){animation-delay:0.2s}
         .typing-dot:nth-child(3){animation-delay:0.4s}
-        .send-btn { width:40px;height:40px;border-radius:50%;background:linear-gradient(to right,#E4002B,#F16321);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:white;font-size:18px;flex-shrink:0;transition:transform 0.15s;box-shadow:0 4px 14px rgba(228,0,43,0.25); }
+        .send-btn{width:40px;height:40px;border-radius:50%;background:linear-gradient(to right,#E4002B,#F16321);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:white;font-size:18px;flex-shrink:0;transition:transform 0.15s;box-shadow:0 4px 14px rgba(228,0,43,0.25)}
         .send-btn:hover{transform:scale(1.08)}
         .send-btn:disabled{background:#e5e5e5;box-shadow:none;cursor:not-allowed}
       `}</style>
 
+      {/* Beams */}
       <div style={{position:"absolute",inset:0,overflow:"hidden",pointerEvents:"none",zIndex:0}}>
-        <div style={{
-          position:"absolute",
-          top:"34%",
-          left:"-24%",
-          width:"150%",
-          height:"36%",
-          borderRadius:"999px",
-          background:"linear-gradient(90deg, transparent 0%, rgba(228,0,43,0.78) 18%, rgba(255,32,32,0.88) 34%, rgba(241,99,33,0.92) 52%, rgba(255,122,0,0.82) 68%, rgba(255,184,0,0.58) 82%, transparent 100%)",
-          backgroundSize:"220% 220%",
-          filter:"blur(26px)",
-          transformOrigin:"center",
-          animation:"intenseRibbonOne 9s ease-in-out infinite alternate",
-          opacity:0.95
-        }}/>
-
-        <div style={{
-          position:"absolute",
-          top:"43%",
-          left:"-22%",
-          width:"145%",
-          height:"30%",
-          borderRadius:"999px",
-          background:"linear-gradient(90deg, transparent 0%, rgba(255,184,0,0.60) 18%, rgba(255,122,0,0.85) 34%, rgba(241,99,33,0.92) 52%, rgba(228,0,43,0.86) 72%, transparent 100%)",
-          backgroundSize:"240% 240%",
-          filter:"blur(34px)",
-          transformOrigin:"center",
-          animation:"intenseRibbonTwo 11s ease-in-out infinite alternate",
-          mixBlendMode:"multiply",
-          opacity:0.85
-        }}/>
-
-        <div style={{
-          position:"absolute",
-          top:"50%",
-          left:"-18%",
-          width:"136%",
-          height:"18%",
-          borderRadius:"999px",
-          background:"linear-gradient(90deg, transparent 0%, rgba(228,0,43,0.40) 18%, rgba(241,99,33,0.70) 45%, rgba(255,184,0,0.45) 70%, transparent 100%)",
-          filter:"blur(42px)",
-          transformOrigin:"center",
-          animation:"intenseRibbonThree 7s ease-in-out infinite alternate",
-          opacity:0.9
-        }}/>
-
-        <div style={{
-          position:"absolute",
-          inset:0,
-          background:"linear-gradient(to bottom, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.22) 32%, rgba(255,255,255,0.80) 62%, white 100%)",
-          pointerEvents:"none"
-        }}/>
+        <div style={{position:"absolute",top:"34%",left:"-24%",width:"150%",height:"36%",borderRadius:"999px",background:"linear-gradient(90deg,transparent 0%,rgba(228,0,43,0.78) 18%,rgba(255,32,32,0.88) 34%,rgba(241,99,33,0.92) 52%,rgba(255,122,0,0.82) 68%,rgba(255,184,0,0.58) 82%,transparent 100%)",filter:"blur(26px)",animation:"ribbon1 9s ease-in-out infinite alternate",opacity:0.95}}/>
+        <div style={{position:"absolute",top:"43%",left:"-22%",width:"145%",height:"30%",borderRadius:"999px",background:"linear-gradient(90deg,transparent 0%,rgba(255,184,0,0.60) 18%,rgba(255,122,0,0.85) 34%,rgba(241,99,33,0.92) 52%,rgba(228,0,43,0.86) 72%,transparent 100%)",filter:"blur(34px)",animation:"ribbon2 11s ease-in-out infinite alternate",mixBlendMode:"multiply",opacity:0.85}}/>
+        <div style={{position:"absolute",top:"50%",left:"-18%",width:"136%",height:"18%",borderRadius:"999px",background:"linear-gradient(90deg,transparent 0%,rgba(228,0,43,0.40) 18%,rgba(241,99,33,0.70) 45%,rgba(255,184,0,0.45) 70%,transparent 100%)",filter:"blur(42px)",animation:"ribbon3 7s ease-in-out infinite alternate",opacity:0.9}}/>
+        <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom,rgba(255,255,255,0.02) 0%,rgba(255,255,255,0.22) 32%,rgba(255,255,255,0.80) 62%,white 100%)",pointerEvents:"none"}}/>
       </div>
 
-      <div style={{padding:"16px 24px",borderBottom:"1px solid rgba(0,0,0,0.06)",display:"flex",alignItems:"center",gap:"10px",position:"relative",zIndex:1,background:"rgba(255,255,255,0.7)",backdropFilter:"blur(16px)",WebkitBackdropFilter:"blur(16px)"}}>
+      {/* Header */}
+      <div style={{padding:"12px 24px",borderBottom:"1px solid rgba(0,0,0,0.06)",display:"flex",alignItems:"center",gap:"10px",position:"relative",zIndex:1,background:"rgba(255,255,255,0.7)",backdropFilter:"blur(16px)",WebkitBackdropFilter:"blur(16px)"}}>
+        {category && (
+          <button onClick={() => setCategory(null)}
+            style={{background:"none",border:"none",cursor:"pointer",fontSize:"20px",color:"#E4002B",padding:"4px",marginRight:"4px",display:"flex",alignItems:"center"}}>
+            ←
+          </button>
+        )}
         <div style={{width:"36px",height:"36px",borderRadius:"50%",background:"linear-gradient(135deg,#E4002B,#F16321,#FFB800)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"16px"}}>✨</div>
-        <div>
-          <p style={{fontWeight:"800",fontSize:"15px",color:"#1A1A1A",lineHeight:1}}>Allie</p>
-          <p style={{fontSize:"11px",color:"#22C55E",fontWeight:"600",marginTop:"2px"}}>● En línea</p>
+        <div style={{flex:1}}>
+          <p style={{fontWeight:"800",fontSize:"15px",color:"#1A1A1A",lineHeight:1,margin:0}}>Allie</p>
+          {category === "ventas" ? (
+            <p style={{fontSize:"11px",color:"#E4002B",fontWeight:"700",marginTop:"2px",margin:0,animation:"fadeInDown 0.3s ease forwards"}}>📈 Modo: Aumentar ventas</p>
+          ) : (
+            <p style={{fontSize:"11px",color:"#22C55E",fontWeight:"600",marginTop:"2px",margin:0}}>● En línea</p>
+          )}
         </div>
-        <span style={{marginLeft:"auto",fontWeight:"900",fontSize:"17px",letterSpacing:"-0.5px",background:"linear-gradient(to right,#E4002B,#F16321)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>túali</span>
+        <span style={{fontWeight:"900",fontSize:"17px",letterSpacing:"-0.5px",background:"linear-gradient(to right,#E4002B,#F16321)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>túali</span>
       </div>
 
-      <div style={{flex:1,overflowY:"auto",padding:"32px 20px",display:"flex",flexDirection:"column",position:"relative",zIndex:1}}>
-        {!started ? (
-          <div style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",textAlign:"center",gap:"12px"}}>
-            <div style={{width:"56px",height:"56px",borderRadius:"50%",background:"linear-gradient(135deg,#E4002B,#F16321,#FFB800)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"26px",boxShadow:"0 6px 24px rgba(228,0,43,0.25)",marginBottom:"8px"}}>✨</div>
-            <h1 style={{fontSize:"28px",fontWeight:"900",color:"#1A1A1A",lineHeight:1.2}}>
-              Hola, soy{" "}
-              <span style={{background:"linear-gradient(to right,#E4002B,#F16321)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>Allie</span>
+      {/* Contenido */}
+      <div style={{flex:1,overflowY:"auto",padding:"24px 20px",display:"flex",flexDirection:"column",position:"relative",zIndex:1}}>
+
+        {/* Pantalla inicial — solo botones sin viñetas */}
+        {!started && !category && (
+          <div style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",textAlign:"center",gap:"16px",animation:"fadeInUp 0.4s ease forwards"}}>
+            <div style={{width:"56px",height:"56px",borderRadius:"50%",background:"linear-gradient(135deg,#E4002B,#F16321,#FFB800)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"26px",boxShadow:"0 6px 24px rgba(228,0,43,0.25)",marginBottom:"4px"}}>✨</div>
+            <h1 style={{fontSize:"26px",fontWeight:"900",color:"#1A1A1A",lineHeight:1.2,margin:0}}>
+              Hola, soy <span style={{background:"linear-gradient(to right,#E4002B,#F16321)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>Allie</span>
             </h1>
-            <p style={{fontSize:"16px",color:"#666",maxWidth:"400px",lineHeight:1.5}}>
+            <p style={{fontSize:"15px",color:"#666",maxWidth:"380px",lineHeight:1.5,margin:0}}>
               Basándome en tu análisis de negocio, ¿qué quieres que hagamos?
             </p>
+            <div style={{display:"flex",flexDirection:"column",gap:"10px",width:"100%",maxWidth:"480px",marginTop:"8px"}}>
+              {CATEGORIES.map(cat => (
+                <button
+                  key={cat.id}
+                  onClick={() => cat.functional && setCategory(cat.id)}
+                  style={{
+                    width:"100%", padding:"14px 18px", borderRadius:"14px",
+                    border:"1.5px solid rgba(228,0,43,0.3)",
+                    background:"rgba(255,255,255,0.8)",
+                    backdropFilter:"blur(12px)",
+                    color:"#1A1A1A", fontWeight:"700", fontSize:"15px",
+                    cursor:"pointer", fontFamily:"Nunito,sans-serif", transition:"all 0.2s",
+                    textAlign:"left", display:"flex", alignItems:"center", justifyContent:"space-between",
+                    boxShadow:"0 2px 12px rgba(228,0,43,0.08)",
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.background = "linear-gradient(to right,#E4002B,#F16321)"
+                    e.currentTarget.style.color = "white"
+                    e.currentTarget.style.border = "none"
+                    e.currentTarget.style.transform = "scale(1.02)"
+                    e.currentTarget.style.boxShadow = "0 8px 24px rgba(228,0,43,0.25)"
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.background = "rgba(255,255,255,0.8)"
+                    e.currentTarget.style.color = "#1A1A1A"
+                    e.currentTarget.style.border = "1.5px solid rgba(228,0,43,0.3)"
+                    e.currentTarget.style.transform = "scale(1)"
+                    e.currentTarget.style.boxShadow = "0 2px 12px rgba(228,0,43,0.08)"
+                  }}
+                >
+                  <span>{cat.label}</span>
+                  <span style={{fontSize:"16px"}}>→</span>
+                </button>
+              ))}
+            </div>
           </div>
-        ) : (
+        )}
+
+        {/* Vista aumentar ventas — ejemplos como texto, no botones */}
+        {!started && category === "ventas" && (
+          <div style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",textAlign:"center",gap:"16px",animation:"fadeInUp 0.4s ease forwards"}}>
+            <div style={{fontSize:"32px"}}>📈</div>
+            <h2 style={{fontSize:"20px",fontWeight:"900",color:"#1A1A1A",margin:0}}>¿Qué quieres lograr con tus ventas?</h2>
+            <p style={{fontSize:"14px",color:"#888",maxWidth:"360px",lineHeight:1.5,margin:0}}>
+              Cuéntame qué quieres mejorar y te crearé tu plan personalizado.
+            </p>
+            <div style={{background:"rgba(255,255,255,0.7)",backdropFilter:"blur(12px)",borderRadius:"16px",padding:"16px 20px",maxWidth:"480px",width:"100%",textAlign:"left",border:"1px solid rgba(228,0,43,0.1)"}}>
+              <p style={{fontSize:"12px",fontWeight:"700",color:"#E4002B",margin:"0 0 10px 0",textTransform:"uppercase",letterSpacing:"0.05em"}}>
+                Algunas cosas que me puedes preguntar
+              </p>
+              {CATEGORIES[0].examples.map(ex => (
+                <p key={ex} style={{margin:"0 0 6px 0",fontSize:"13px",color:"#888",lineHeight:1.5}}>· {ex}</p>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Mensajes */}
+        {started && (
           <div style={{display:"flex",flexDirection:"column",gap:"20px",maxWidth:"720px",margin:"0 auto",width:"100%"}}>
             {messages.map((msg, i) => (
               <div key={i} className="chat-msg">
                 {msg.from === "allie" ? (
                   <div style={{display:"flex",gap:"10px",alignItems:"flex-start"}}>
-                    <AllieAvatar />
-                    <p style={{fontSize:"15px",color:"#1A1A1A",lineHeight:1.6,paddingTop:"4px"}}>{msg.text}</p>
+                    <AllieAvatar/>
+                    <p style={{fontSize:"15px",color:"#1A1A1A",lineHeight:1.6,paddingTop:"4px",margin:0}}>{msg.text}</p>
                   </div>
                 ) : (
                   <div style={{display:"flex",justifyContent:"flex-end"}}>
                     <div style={{background:"#f4f4f4",borderRadius:"20px 4px 20px 20px",padding:"12px 18px",maxWidth:"70%"}}>
-                      <p style={{fontSize:"15px",color:"#1A1A1A",lineHeight:1.5}}>{msg.text}</p>
+                      <p style={{fontSize:"15px",color:"#1A1A1A",lineHeight:1.5,margin:0}}>{msg.text}</p>
                     </div>
                   </div>
                 )}
@@ -628,7 +591,7 @@ function PantallaChat() {
             ))}
             {isTyping && (
               <div className="chat-msg" style={{display:"flex",gap:"10px",alignItems:"flex-start"}}>
-                <AllieAvatar />
+                <AllieAvatar/>
                 <div style={{background:"#f4f4f4",borderRadius:"20px",padding:"14px 18px"}}>
                   <span className="typing-dot"/><span className="typing-dot"/><span className="typing-dot"/>
                 </div>
@@ -639,39 +602,22 @@ function PantallaChat() {
         )}
       </div>
 
-      <div style={{padding:"16px 20px 24px",maxWidth:"720px",margin:"0 auto",width:"100%",boxSizing:"border-box",position:"relative",zIndex:1}}>
-        <div style={{display:"flex",gap:"10px",alignItems:"center",background:"rgba(255,255,255,0.8)",backdropFilter:"blur(16px)",WebkitBackdropFilter:"blur(16px)",borderRadius:"28px",border:"1px solid rgba(255,255,255,0.9)",padding:"8px 8px 8px 20px",boxShadow:"0 2px 20px rgba(0,0,0,0.07), inset 0 1px 0 rgba(255,255,255,1)"}}>
+      {/* Input */}
+      <div style={{padding:"12px 20px 20px",maxWidth:"720px",margin:"0 auto",width:"100%",boxSizing:"border-box",position:"relative",zIndex:1}}>
+        <div style={{display:"flex",gap:"10px",alignItems:"center",background:"rgba(255,255,255,0.8)",backdropFilter:"blur(16px)",WebkitBackdropFilter:"blur(16px)",borderRadius:"28px",border:"1px solid rgba(255,255,255,0.9)",padding:"8px 8px 8px 20px",boxShadow:"0 2px 20px rgba(0,0,0,0.07)"}}>
           <input
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === "Enter" && handleSend()}
-            placeholder="Escribe tu mensaje..."
+            placeholder={category === "ventas" ? "Escribe lo que quieres lograr..." : "Escribe tu mensaje..."}
             style={{flex:1,border:"none",outline:"none",fontSize:"15px",fontFamily:"Nunito, sans-serif",color:"#1A1A1A",background:"transparent"}}
           />
-          <button className="send-btn" onClick={handleSend} disabled={!input.trim()}>↑</button>
+          <button className="send-btn" onClick={() => handleSend()} disabled={!input.trim()}>↑</button>
         </div>
-        <p style={{textAlign:"center",fontSize:"11px",color:"#bbb",marginTop:"10px"}}>
+        <p style={{textAlign:"center",fontSize:"11px",color:"#bbb",marginTop:"8px"}}>
           Allie puede cometer errores. Verifica la información importante.
         </p>
       </div>
-    </div>
-  )
-}
-
-function MetricMiniCard({ label, value }) {
-  return (
-    <div
-      style={{
-        background: "#fffaf8",
-        border: "1px solid #fee2e2",
-        borderRadius: "16px",
-        padding: "14px 16px",
-      }}
-    >
-      <p style={{ marginTop: 0, marginBottom: "6px", color: "#9A3412", fontSize: "11px", fontWeight: "700" }}>
-        {label}
-      </p>
-      <p style={{ margin: 0, color: "#1A1A1A", fontSize: "22px", fontWeight: "900" }}>{value}</p>
     </div>
   )
 }
