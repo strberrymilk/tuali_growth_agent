@@ -819,6 +819,58 @@ function PantallaProcesando({ isRunning, activePreset }) {
 
 function PantallaResultado({ activePreset, result, error, onBack }) {
   const activeLabel = ANALYSIS_PRESETS[activePreset]?.label ?? "Tuali"
+  const [speechRegion, setSpeechRegion] = useState("España")
+
+  useEffect(() => {
+    if (typeof navigator === "undefined" || !navigator.language) {
+      return
+    }
+
+    const locale = navigator.language.toLowerCase()
+    if (locale.startsWith("es-ar")) {
+      setSpeechRegion("Argentina")
+    } else if (locale.startsWith("es-ec")) {
+      setSpeechRegion("Ecuador")
+    } else if (locale.startsWith("es-mx")) {
+      setSpeechRegion("México")
+    } else if (locale.startsWith("es-co")) {
+      setSpeechRegion("Colombia")
+    } else if (locale.startsWith("es-cl")) {
+      setSpeechRegion("Chile")
+    } else if (locale.startsWith("es-pe")) {
+      setSpeechRegion("Perú")
+    } else if (locale.startsWith("es-es")) {
+      setSpeechRegion("España")
+    }
+  }, [])
+
+  const localeMap = {
+    Argentina: "es-AR",
+    Ecuador: "es-EC",
+    México: "es-MX",
+    Colombia: "es-CO",
+    Chile: "es-CL",
+    Perú: "es-PE",
+    España: "es-ES",
+  }
+
+  function speakText(text) {
+    if (!text) {
+      return
+    }
+
+    if (typeof window === "undefined" || !window.speechSynthesis) {
+      alert("Tu navegador no soporta voz.")
+      return
+    }
+
+    window.speechSynthesis.cancel()
+    const utterance = new SpeechSynthesisUtterance(text)
+    utterance.lang = localeMap[speechRegion] ?? "es-ES"
+    utterance.pitch = 1
+    utterance.rate = 1
+    window.speechSynthesis.speak(utterance)
+  }
 
   return (
     <div
@@ -875,9 +927,34 @@ function PantallaResultado({ activePreset, result, error, onBack }) {
             <h2 style={{ marginTop: 0, marginBottom: "10px", color: "#1A1A1A", fontSize: "32px" }}>
               {result?.summary?.store_name ?? "Resultado listo"}
             </h2>
-            <p style={{ color: "#525252", lineHeight: "1.6", marginBottom: "14px" }}>
-              {result?.message ?? "Allie terminó tu análisis."}
-            </p>
+            <div style={{ display: "flex", alignItems: "flex-start", gap: "12px", marginBottom: "14px", flexWrap: "wrap" }}>
+              <div style={{ flex: 1 }}>
+                <p style={{ color: "#525252", lineHeight: "1.6", margin: 0 }}>
+                  {result?.message ?? "Allie terminó tu análisis."}
+                </p>
+                <p style={{ marginTop: "10px", color: "#666", fontSize: "13px" }}>
+                  Voz regional detectada: <strong>{speechRegion}</strong>
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => speakText(result?.message ?? "Allie terminó tu análisis.")}
+                style={{
+                  background: "#E4002B",
+                  border: "none",
+                  borderRadius: "999px",
+                  padding: "10px 18px",
+                  color: "white",
+                  fontWeight: "700",
+                  cursor: "pointer",
+                  fontSize: "14px",
+                  fontFamily: "Nunito, sans-serif",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                Escuchar respuesta
+              </button>
+            </div>
             <div
               style={{
                 background: "#fff7ed",
