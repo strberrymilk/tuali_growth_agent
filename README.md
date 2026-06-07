@@ -78,10 +78,17 @@ Notes:
 
 ## Yomp Mock Endpoints
 
-Run the backend with:
+Run the backend from the repository root with:
 
 ```bash
 uvicorn backend.main:app --reload
+```
+
+Or run it from inside `backend/` with:
+
+```bash
+cd backend
+uvicorn main:app --reload
 ```
 
 Run the frontend with:
@@ -174,3 +181,45 @@ Current MCP-like tools include:
 - `get_yomp_growth_context(tuali_cliente_id)`
 - `save_recommendation(tuali_cliente_id, recommendation)`
 - `get_recommendations(tuali_cliente_id)`
+
+## Vercel Backend Strategy
+
+Recommended deployment strategy:
+
+- Create a separate Vercel project for the backend.
+- Set `Root Directory` to `backend`.
+- Do not deploy the backend from the repository root.
+
+Backend entrypoint inside `backend/`:
+
+- `index.py` exports `app`
+- `pyproject.toml` exposes `app = "index:app"`
+
+Environment variables to configure in Vercel:
+
+```env
+MONGODB_URI_TUALI=...
+MONGODB_TUALI=...
+MONGODB_URI_YOMP=...
+MONGODB_YOMP=...
+GEMINI_API_KEY=...
+GEMINI_MODEL_ID=gemini-2.5-flash
+ELEVENLABS_API_KEY=...
+ELEVENLABS_VOICE_ID=JBFqnCBsd6RMkjVDRZzb
+ELEVENLABS_MODEL_ID=eleven_multilingual_v2
+ALLIE_RECOMMENDATIONS_COLLECTION=allie_recommendations
+```
+
+Suggested Vercel settings:
+
+- Framework Preset: `Other`
+- Root Directory: `backend`
+- Build Command: leave empty
+- Output Directory: leave empty
+
+Expected backend URLs after deploy:
+
+```text
+https://your-backend-project.vercel.app/health
+https://your-backend-project.vercel.app/docs
+```

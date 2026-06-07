@@ -10,6 +10,7 @@ router = APIRouter(prefix="/tts", tags=["tts"])
 
 class TTSRequest(BaseModel):
     text: str
+    country: str = "MX"
 
 
 TEST_PAGE_HTML = """
@@ -130,7 +131,7 @@ def get_tts_test_page() -> str:
 @router.post("/preview")
 def generate_tts_preview(payload: TTSRequest) -> Response:
     try:
-        audio = generate_elevenlabs_speech_bytes(payload.text)
+        audio = generate_elevenlabs_speech_bytes(payload.text, country=payload.country)
     except ValueError as error:
         raise HTTPException(status_code=400, detail=str(error)) from error
     except Exception as error:
