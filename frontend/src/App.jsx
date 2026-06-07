@@ -30,7 +30,7 @@ function LiquidBackground() {
           inset: 0;
           overflow: hidden;
           z-index: 0;
-          background: #fff8f3;
+          background: white;
         }
         .liquid-layer {
           position: absolute;
@@ -40,33 +40,44 @@ function LiquidBackground() {
           animation: liquidDrift 16s ease-in-out infinite alternate;
         }
         .liquid-layer.one {
-          background:
-            radial-gradient(circle at 18% 28%, rgba(228,0,43,0.58), transparent 32%),
-            radial-gradient(circle at 75% 25%, rgba(241,99,33,0.52), transparent 35%),
-            radial-gradient(circle at 45% 78%, rgba(255,184,0,0.45), transparent 38%),
-            radial-gradient(circle at 20% 82%, rgba(255,80,120,0.42), transparent 34%);
-        }
+        animation: liquidDrift 8s ease-in-out infinite alternate;
+}
         .liquid-layer.two {
-          opacity: 0.7;
-          filter: blur(110px);
-          mix-blend-mode: multiply;
-          animation: liquidDriftTwo 22s ease-in-out infinite alternate;
-          background:
-            radial-gradient(circle at 70% 72%, rgba(228,0,43,0.30), transparent 34%),
-            radial-gradient(circle at 35% 40%, rgba(255,150,0,0.35), transparent 36%),
-            radial-gradient(circle at 85% 35%, rgba(255,210,120,0.35), transparent 35%);
-        }
+        animation: liquidDriftTwo 10s ease-in-out infinite alternate;
+}
         .soft-white-center {
           position: absolute;
           inset: 0;
-          background: radial-gradient(circle at center, rgba(255,255,255,0.62), rgba(255,255,255,0.18), transparent 75%);
+          background: radial-gradient(circle at center, rgba(255,255,255,0.55), rgba(255,255,255,0.1), transparent 75%);
           pointer-events: none;
         }
         @keyframes liquidDrift {
-          0% { transform: translate3d(-4%,-3%,0) scale(1) rotate(0deg); }
-          50% { transform: translate3d(5%,4%,0) scale(1.16) rotate(18deg); }
-          100% { transform: translate3d(-2%,6%,0) scale(1.08) rotate(-12deg); }
-        }
+  0% {
+    transform: translate3d(-15%,-10%,0) scale(1) rotate(0deg);
+  }
+
+  50% {
+    transform: translate3d(15%,10%,0) scale(1.25) rotate(25deg);
+  }
+
+  100% {
+    transform: translate3d(-10%,15%,0) scale(1.1) rotate(-15deg);
+  }
+}
+
+@keyframes liquidDriftTwo {
+  0% {
+    transform: translate3d(12%,8%,0) scale(1.1) rotate(0deg);
+  }
+
+  50% {
+    transform: translate3d(-18%,-10%,0) scale(1.3) rotate(-25deg);
+  }
+
+  100% {
+    transform: translate3d(10%,-12%,0) scale(1.15) rotate(18deg);
+  }
+}
         @keyframes liquidDriftTwo {
           0% { transform: translate3d(5%,4%,0) scale(1.08) rotate(0deg); }
           50% { transform: translate3d(-7%,-4%,0) scale(1.20) rotate(-22deg); }
@@ -494,7 +505,7 @@ function PaginaInicio({ onAllie }) {
 }
 
 function PantallaBienvenido({ onNext }) {
-  const [phase, setPhase] = useState("bienvenido")
+  const [phase, setPhase] = useState("logo")
 
   useEffect(() => {
     const timeoutId = setTimeout(() => setPhase("subtitle"), 2500)
@@ -513,9 +524,21 @@ function PantallaBienvenido({ onNext }) {
       }}
     >
       <style>{`
-        @keyframes fadeInUp {
-          from { opacity:0; transform:translateY(40px); }
-          to { opacity:1; transform:translateY(0); }
+        @keyframes logoIntro {
+          0% { opacity:0; transform:scale(0.82) translateY(24px); filter:blur(8px); }
+          100% { opacity:1; transform:scale(1) translateY(0); filter:blur(0); }
+        }
+        @keyframes logoMoveUp {
+          0% { transform:translateY(0) scale(1); opacity:1; }
+          100% { transform:translateY(-145px) scale(0.62); opacity:1; }
+        }
+        @keyframes contentUp {
+          0% { opacity:0; transform:translateY(90px); filter:blur(10px); }
+          100% { opacity:1; transform:translateY(0); filter:blur(0); }
+        }
+        @keyframes buttonUp {
+          0% { opacity:0; transform:translateY(36px) scale(0.96); }
+          100% { opacity:1; transform:translateY(0) scale(1); }
         }
       `}</style>
       <div style={{ textAlign: "center", padding: "0 40px" }}>
@@ -612,11 +635,19 @@ function PantallaHerramientas({ onChoose }) {
     >
       <style>{`
         @keyframes fadeInUp {
-          from { opacity:0; transform:translateY(30px) }
-          to { opacity:1; transform:translateY(0) }
+          from { opacity: 0; transform: translateY(30px) }
+          to { opacity: 1; transform: translateY(0) }
         }
       `}</style>
-      <GlassCard style={{ padding: "40px", maxWidth: "500px", width: "90%", animation: "fadeInUp 0.6s ease forwards" }}>
+
+      <GlassCard
+        style={{
+          padding: "40px",
+          maxWidth: "500px",
+          width: "90%",
+          animation: "fadeInUp 0.6s ease forwards",
+        }}
+      >
         <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
           <span
             style={{
@@ -795,12 +826,9 @@ function PantallaProcesando({ isRunning, activePreset }) {
           to { opacity:1; transform:translateY(0); }
         }
       `}</style>
-
       <div className="fluid-orb-wrapper">
         <div className="fluid-orb-glow" />
-        <div className="fluid-orb">
-          <div className="orb-soft-mask" />
-        </div>
+        <div className="fluid-orb"><div className="orb-soft-mask" /></div>
       </div>
 
       <div style={{ textAlign: "center", marginTop: "42px", animation: "fadeInUp 0.8s ease 0.3s both" }}>

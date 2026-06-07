@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from fastapi import APIRouter, HTTPException
 
-from backend.services.yomp_service import (
+from services.yomp_service import (
     get_yomp_daily_product_report,
     get_yomp_daily_sales_report,
     get_yomp_growth_context,

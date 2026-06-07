@@ -1,4 +1,4 @@
-from backend.mcp.tools import (
+from .tools import (
     collect_tool_outputs,
     get_available_promotions,
     get_loyalty_status,

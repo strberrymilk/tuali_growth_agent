@@ -2,18 +2,18 @@ from __future__ import annotations
 
 from typing import Any
 
-from backend.models import AgentDataSource, AgentRecommendation, AgentToolDescriptor, YompGrowthContext
-from backend.services.recommendation_store import (
+from models import AgentDataSource, AgentRecommendation, AgentToolDescriptor, YompGrowthContext
+from services.recommendation_store import (
     get_recommendations as get_recommendations_from_store,
     save_recommendation as save_recommendation_to_store,
 )
-from backend.services.tuali_service import (
+from services.tuali_service import (
     get_active_goal as get_active_goal_from_service,
     get_available_promotions as get_available_promotions_from_service,
     get_loyalty_status as get_loyalty_status_from_service,
     get_store_profile as get_store_profile_from_service,
 )
-from backend.services.yomp_service import get_yomp_growth_context as get_yomp_growth_context_from_service
+from services.yomp_service import get_yomp_growth_context as get_yomp_growth_context_from_service
 
 
 TOOL_CATALOG = [

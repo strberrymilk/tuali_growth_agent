@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import uuid
 
-from backend.mcp.tools import collect_tool_outputs, save_recommendation
-from backend.models import (
+from mcp.tools import collect_tool_outputs, save_recommendation
+from models import (
     ActiveGoal,
     AgentDataSource,
     AgentRecommendation,
@@ -14,7 +14,7 @@ from backend.models import (
     StoreProfile,
     YompGrowthContext,
 )
-from backend.services.gemini_service import GeminiStructuredResponse, synthesize_growth_response
+from services.gemini_service import GeminiStructuredResponse, synthesize_growth_response
 
 
 LOW_TICKET_THRESHOLD = 65

@@ -4,8 +4,12 @@ from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 from fastapi.responses import FileResponse, HTMLResponse, Response
 from pydantic import BaseModel
 
+<<<<<<< HEAD
 from backend.services.tts_service import generate_elevenlabs_speech_bytes, generate_tts
 from backend.services.tts_service import generate_elevenlabs_speech_bytes, generate_voice_to_voice
+=======
+from services.tts_service import generate_elevenlabs_speech_bytes, generate_tts
+>>>>>>> 65fc6fa6d672c47588639dcb2ffd489e1e963592
 
 
 router = APIRouter(prefix="/tts", tags=["tts"])

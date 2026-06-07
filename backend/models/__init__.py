@@ -1,4 +1,4 @@
-from backend.models.agent import (
+from .agent import (
     AgentDataSource,
     AgentRecommendation,
     AgentRunRequest,
@@ -7,8 +7,8 @@ from backend.models.agent import (
     AgentToolDescriptor,
     StoredRecommendation,
 )
-from backend.models.tuali import ActiveGoal, LoyaltyStatus, Promotion, StoreProfile
-from backend.models.yomp import (
+from .tuali import ActiveGoal, LoyaltyStatus, Promotion, StoreProfile
+from .yomp import (
     YompCategorySummary,
     YompCriticalStock,
     YompDailyProductReport,

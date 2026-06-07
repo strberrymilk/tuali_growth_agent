@@ -1,4 +1,4 @@
-from backend.mcp.tools import (
+from mcp.tools import (
     collect_tool_outputs,
     get_mcp_tools as get_agent_tools,
     get_recommendations,

@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from fastapi import APIRouter, Body, Query
 
-from backend.agent.recommendation_service import run_allie_agent
-from backend.mcp.tools import get_mcp_tools, get_recommendations
-from backend.models import AgentRunRequest, AgentRunResponse, StoredRecommendation
+from agent.recommendation_service import run_allie_agent
+from mcp.tools import get_mcp_tools, get_recommendations
+from models import AgentRunRequest, AgentRunResponse, StoredRecommendation
 
 
 router = APIRouter(prefix="/agent", tags=["agent"])

@@ -7,8 +7,8 @@ from typing import Any
 
 from pymongo.errors import PyMongoError
 
-from backend.database.mongo import get_yomp_collection
-from backend.models import (
+from database.mongo import get_yomp_collection
+from models import (
     YompCriticalStock,
     YompDailyProductReport,
     YompDailySalesMetrics,

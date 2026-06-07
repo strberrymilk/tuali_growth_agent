@@ -5,8 +5,8 @@ from datetime import datetime, timezone
 
 from pymongo.errors import PyMongoError
 
-from backend.database.mongo import get_tuali_collection
-from backend.models import AgentRecommendation, StoredRecommendation
+from database.mongo import get_tuali_collection
+from models import AgentRecommendation, StoredRecommendation
 
 
 RECOMMENDATIONS_COLLECTION = (

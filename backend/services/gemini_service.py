@@ -7,8 +7,8 @@ from typing import Any, Literal
 from dotenv import load_dotenv
 from pydantic import BaseModel, ConfigDict, Field
 
-from backend.agent.prompts import build_growth_prompt
-from backend.models import AgentRecommendation
+from agent.prompts import build_growth_prompt
+from models import AgentRecommendation
 
 
 load_dotenv()

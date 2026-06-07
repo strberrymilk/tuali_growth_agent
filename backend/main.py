@@ -2,9 +2,9 @@ from fastapi import FastAPI
 from backend.routes.agent_router import router as agent_router
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.api.agent import router as agent_router
-from backend.api.tts import router as tts_router
-from backend.api.yomp import router as yomp_router
+from api.agent import router as agent_router
+from api.tts import router as tts_router
+from api.yomp import router as yomp_router
 
 
 app = FastAPI(title="Tuali Growth Agent API", version="0.1.0")
@@ -21,6 +21,11 @@ app.include_router(yomp_router)
 app.include_router(agent_router)
 
 
+@app.get("/")
+def root() -> dict[str, str]:
+    return {"status": "ok", "service": "tuali-growth-agent"}
+
+
 @app.get("/health")
-def health_check() -> dict[str, str]:
+def health_check_alias() -> dict[str, str]:
     return {"status": "ok"}

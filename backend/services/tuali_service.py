@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from backend.models import ActiveGoal, LoyaltyStatus, Promotion, StoreProfile
+from models import ActiveGoal, LoyaltyStatus, Promotion, StoreProfile
 
 
 TUALI_MOCK_DATA_PATH = Path(__file__).resolve().parents[2] / "mock_data" / "tuali_mock.json"

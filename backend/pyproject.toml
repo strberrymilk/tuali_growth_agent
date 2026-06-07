@@ -1,0 +1,11 @@
+[project]
+name = "tuali-growth-agent"
+version = "0.1.0"
+requires-python = ">=3.10"
+
+[project.scripts]
+app = "index:app"
+
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
