@@ -57,12 +57,13 @@ Files and folders that should stay out of version control, such as virtual envir
 
 ## MongoDB Setup
 
-For two sister-company databases in the same MongoDB cluster, use one shared URI and two database names in `.env`:
+For ALY and YOMP on separate MongoDB clusters, use one URI and one database name for each service in `.env`:
 
 ```env
-MONGO_URI=mongodb+srv://<user>:<password>@<cluster-url>/?retryWrites=true&w=majority
-MONGO_DB_COMPANY_ONE=company_one
-MONGO_DB_COMPANY_TWO=company_two
+MONGODB_URI_ALY=mongodb+srv://<user>:<password>@<aly-cluster-url>/?retryWrites=true&w=majority
+MONGODB_URI_YOMP=mongodb+srv://<user>:<password>@<yomp-cluster-url>/?retryWrites=true&w=majority
+MONGODB_ALY=aly_ai
+MONGODB_YOMP=yomp_pos_db
 ```
 
 Backend connection helper lives in `backend/database/mongo.py`.

@@ -4,7 +4,7 @@ from typing import Any
 
 from pymongo.errors import PyMongoError
 
-from backend.database.mongo import get_company_one_collection
+from backend.database.mongo import get_yomp_collection
 
 
 MOCK_DATA_PATH = Path(__file__).resolve().parents[2] / "mock_data" / "yomp_mock.json"
@@ -22,7 +22,7 @@ def _get_mock_client_data(tuali_cliente_id: str) -> dict[str, Any] | None:
 
 def _safe_find_many(collection_name: str, tuali_cliente_id: str) -> list[dict[str, Any]]:
     try:
-        collection = get_company_one_collection(collection_name)
+        collection = get_yomp_collection(collection_name)
         documents = list(collection.find({"tuali_cliente_id": tuali_cliente_id}, {"_id": 0}))
         if documents:
             return documents
@@ -33,7 +33,7 @@ def _safe_find_many(collection_name: str, tuali_cliente_id: str) -> list[dict[st
 
 def _safe_find_one(collection_name: str, tuali_cliente_id: str) -> dict[str, Any] | None:
     try:
-        collection = get_company_one_collection(collection_name)
+        collection = get_yomp_collection(collection_name)
         document = collection.find_one({"tuali_cliente_id": tuali_cliente_id}, {"_id": 0})
         if document:
             return document

@@ -6,37 +6,56 @@ from pymongo.database import Database
 
 load_dotenv()
 
-MONGO_URI = os.getenv("MONGO_URI", "")
-MONGO_DB_COMPANY_ONE = os.getenv("MONGO_DB_COMPANY_ONE", "")
-MONGO_DB_COMPANY_TWO = os.getenv("MONGO_DB_COMPANY_TWO", "")
+MONGODB_URI_ALY = os.getenv("MONGODB_URI_ALY", "")
+MONGODB_URI_YOMP = os.getenv("MONGODB_URI_YOMP", "")
+MONGODB_ALY = os.getenv("MONGODB_ALY", "")
+MONGODB_YOMP = os.getenv("MONGODB_YOMP", "")
 
-mongo_client: MongoClient | None = None
+aly_mongo_client: MongoClient | None = None
+yomp_mongo_client: MongoClient | None = None
 
-def get_mongo_client() -> MongoClient:
-    global mongo_client
 
-    if not MONGO_URI:
-        raise ValueError("Missing MONGO_URI in environment variables.")
+def get_aly_mongo_client() -> MongoClient:
+    global aly_mongo_client
 
-    if mongo_client is None:
-        mongo_client = MongoClient(MONGO_URI)
+    if not MONGODB_URI_ALY:
+        raise ValueError("Missing MONGODB_URI_ALY in environment variables.")
 
-    return mongo_client
+    if aly_mongo_client is None:
+        aly_mongo_client = MongoClient(MONGODB_URI_ALY)
 
-def get_company_one_db() -> Database:
-    if not MONGO_DB_COMPANY_ONE:
-        raise ValueError("Missing MONGO_DB_COMPANY_ONE in environment variables.")
+    return aly_mongo_client
 
-    return get_mongo_client()[MONGO_DB_COMPANY_ONE]
 
-def get_company_two_db() -> Database:
-    if not MONGO_DB_COMPANY_TWO:
-        raise ValueError("Missing MONGO_DB_COMPANY_TWO in environment variables.")
+def get_yomp_mongo_client() -> MongoClient:
+    global yomp_mongo_client
 
-    return get_mongo_client()[MONGO_DB_COMPANY_TWO]
+    if not MONGODB_URI_YOMP:
+        raise ValueError("Missing MONGODB_URI_YOMP in environment variables.")
 
-def get_company_one_collection(collection_name: str):
-    return get_company_one_db()[collection_name]
+    if yomp_mongo_client is None:
+        yomp_mongo_client = MongoClient(MONGODB_URI_YOMP)
 
-def get_company_two_collection(collection_name: str):
-    return get_company_two_db()[collection_name]
+    return yomp_mongo_client
+
+
+def get_aly_db() -> Database:
+    if not MONGODB_ALY:
+        raise ValueError("Missing MONGODB_ALY in environment variables.")
+
+    return get_aly_mongo_client()[MONGODB_ALY]
+
+
+def get_yomp_db() -> Database:
+    if not MONGODB_YOMP:
+        raise ValueError("Missing MONGODB_YOMP in environment variables.")
+
+    return get_yomp_mongo_client()[MONGODB_YOMP]
+
+
+def get_aly_collection(collection_name: str):
+    return get_aly_db()[collection_name]
+
+
+def get_yomp_collection(collection_name: str):
+    return get_yomp_db()[collection_name]
