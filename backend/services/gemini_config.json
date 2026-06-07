@@ -1,0 +1,71 @@
+{
+  "agent_name": "Tuali Growth Agent",
+  "version": "1.1.0",
+  "system_instruction": "Eres el Agente de Crecimiento de Tuali (Tuali Growth Agent), un asesor financiero y consultor de negocios ultra-inteligente, empático y experto para tenderos de Yomp POS en México. Tu objetivo es cruzar las metas de venta, el inventario, los reportes diarios y el contexto estacional (como Día de Muertos, Verano, Navidad) para dar consejos altamente accionables. Cuando detectes desviaciones en el seguimiento de metas, motiva al usuario o sugiérele adoptar las estrategias recomendadas. Si hay desabasto estacional o sugerencia de productos nuevos de alta rotación en su zona, promueve los microcréditos de Tuali. Habla de forma clara, amigable y muy motivadora. NUNCA inventes datos.",
+  "mongodb_context_schema": {
+    "database": "yomp_pos_db",
+    "collections": {
+      "transacciones_caja": {
+        "description": "Ventas en tiempo real por ticket de la caja de Yomp.",
+        "keys": ["tuali_cliente_id", "folio_ticket", "fecha_hora", "metodo_pago", "productos_vendidos", "total_ticket"]
+      },
+      "inventario_tienda": {
+        "description": "Niveles actuales de stock en tienda física.",
+        "keys": ["tuali_cliente_id", "productos", "productos.stock_actual", "productos.stock_minimo"]
+      },
+      "reporte_ventas_diario": {
+        "description": "Métricas financieras acumuladas por día.",
+        "keys": ["tuali_cliente_id", "fecha", "total_venta_dinero", "ticket_promedio_dia", "meta_progreso_porcentaje"]
+      },
+      "reporte_producto_diario": {
+        "description": "Análisis diario de mercancía líder y productos estancados.",
+        "keys": ["tuali_cliente_id", "fecha", "productos_mas_vendidos", "productos_estancados"]
+      },
+      "tiendas": {
+        "description": "Perfil general de la tienda, ubicación geográfica (ej. Monterrey, San Pedro), tamaño y SKUs frecuentes comprados al Cedis.",
+        "keys": ["_id", "nombre", "propietario", "ubicacion.tipo_zona", "tamanio", "skus_frecuentes"]
+      },
+      "metas": {
+        "description": "Metas comerciales asignadas o creadas para el cliente (ej. incremento agresivo, crecimiento gradual).",
+        "keys": ["customer_id", "tipo", "descripcion", "configuracion.monto_objetivo_mxn", "baseline_ventas_inferidas", "estado"]
+      },
+      "estrategias": {
+        "description": "Acciones sugeridas por la IA para cumplir una meta usando el contexto estacional y la tendencia de la zona.",
+        "keys": ["meta_id", "customer_id", "contexto_usado.temporada", "acciones", "acciones.tipo", "acciones.cantidad_sugerida", "acciones.razon", "impacto_total_estimado_mxn"]
+      },
+      "ventas_inferidas": {
+        "description": "Comportamiento y tendencias de pedidos semanales por SKU y deltas de incremento/decremento.",
+        "keys": ["customer_id", "sku", "nombre_producto", "semanas", "tendencia_periodo"]
+      },
+      "contexto_estacional": {
+        "description": "Fechas clave del mercado mexicano y el impacto estimado (porcentaje) esperado por categoría.",
+        "keys": ["nombre", "fecha_inicio", "fecha_fin", "zonas_aplica", "skus_impactados", "notas_ia"]
+      },
+      "resumen_estrategias": {
+        "description": "Historial de adopción de estrategias pasadas y aprendizajes de la IA (qué productos funcionaron o fallaron en su zona).",
+        "keys": ["customer_id", "resultado_meta", "estrategias.fue_adoptada", "estrategias.resultado", "aprendizajes.skus_exitosos", "aprendizajes.skus_fallidos"]
+      },
+      "seguimiento_metas": {
+        "description": "Avance en tiempo real de la meta actual comparando las ventas acumuladas vs el objetivo proporcional.",
+        "keys": ["meta_id", "customer_id", "fecha_corte", "ventas_inferidas_acumuladas", "ventas_objetivo_proporcional", "avance_pct", "estado"]
+      },
+      "orders": {
+        "description": "Pedidos generales solicitados por la tienda.",
+        "keys": ["id_pedido", "customer_id", "fecha_pedido", "Total", "meta_id", "es_pedido_post_estrategia"]
+      },
+      "orderdetails": {
+        "description": "Detalle de los artículos contenidos en los pedidos.",
+        "keys": ["id_pedido", "sku_solicitado", "nombre_sku_solicitado", "Quantity", "sugerido_por_ia"]
+      }
+    }
+  },
+  "gemini_model_settings": {
+    "model_name": "gemini-1.5-flash",
+    "generation_config": {
+      "temperature": 0.3,
+      "topP": 0.95,
+      "maxOutputTokens": 1024,
+      "responseMimeType": "text/plain"
+    }
+  }
+}
