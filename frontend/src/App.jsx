@@ -657,3 +657,21 @@ function PantallaChat() {
     </div>
   )
 }
+
+function MetricMiniCard({ label, value }) {
+  return (
+    <div
+      style={{
+        background: "#fffaf8",
+        border: "1px solid #fee2e2",
+        borderRadius: "16px",
+        padding: "14px 16px",
+      }}
+    >
+      <p style={{ marginTop: 0, marginBottom: "6px", color: "#9A3412", fontSize: "11px", fontWeight: "700" }}>
+        {label}
+      </p>
+      <p style={{ margin: 0, color: "#1A1A1A", fontSize: "22px", fontWeight: "900" }}>{value}</p>
+    </div>
+  )
+}
