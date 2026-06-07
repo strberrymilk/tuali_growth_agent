@@ -82,6 +82,8 @@ Available demo endpoints:
 GET /health
 GET /tts/test-page
 POST /tts/preview
+POST /tts/voice-to-voice
+GET /tts/files/{filename}
 GET /yomp/{tuali_cliente_id}/transactions
 GET /yomp/{tuali_cliente_id}/inventory
 GET /yomp/{tuali_cliente_id}/daily-sales
@@ -101,6 +103,7 @@ To test ElevenLabs text-to-speech, set these variables in `.env`:
 ELEVENLABS_API_KEY=your_api_key
 ELEVENLABS_VOICE_ID=JBFqnCBsd6RMkjVDRZzb
 ELEVENLABS_MODEL_ID=eleven_multilingual_v2
+ELEVENLABS_STS_MODEL_ID=eleven_multilingual_sts_v2
 ```
 
 Local SDK demo:
@@ -110,3 +113,5 @@ py -m backend.services.tts_demo
 ```
 
 The demo generates an MP3 file in `generated_audio/` and prints the saved file path.
+
+Voice-to-voice endpoint expects an uploaded audio file and returns a generated MP3 path plus a download URL.
