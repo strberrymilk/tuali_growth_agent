@@ -622,26 +622,6 @@ function PantallaHerramientas({ onChoose }) {
     justifyContent: "space-between",
   }
 
-  function PantallaHerramientas({ onChoose }) {
-  const btnBase = {
-    width: "100%",
-    padding: "15px 18px",
-    borderRadius: "14px",
-    border: "1.5px solid rgba(228,0,43,0.4)",
-    background: "rgba(255,255,255,0.5)",
-    backdropFilter: "blur(12px)",
-    color: "#1A1A1A",
-    fontWeight: "600",
-    fontSize: "15px",
-    cursor: "pointer",
-    fontFamily: "Nunito, sans-serif",
-    transition: "all 0.2s",
-    textAlign: "left",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-  }
-
   return (
     <div
       style={{
@@ -668,7 +648,70 @@ function PantallaHerramientas({ onChoose }) {
           animation: "fadeInUp 0.6s ease forwards",
         }}
       >
-        {/* todo tu contenido */}
+        <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
+          <span
+            style={{
+              fontWeight: "900",
+              fontSize: "20px",
+              background: "linear-gradient(to right, #E4002B, #F16321)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
+            ✨ Allie
+          </span>
+        </div>
+        <p style={{ fontSize: "16px", fontWeight: "700", color: "#1A1A1A", marginBottom: "6px", lineHeight: "1.4" }}>
+          Para generar el análisis de tu negocio, utilizo tu información en Tuali.
+        </p>
+        <p style={{ fontSize: "14px", color: "#666", marginBottom: "24px", lineHeight: "1.5" }}>
+          ¿Te gustaría complementar el análisis con alguna de estas herramientas de ventas?
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+          <button
+            type="button"
+            onClick={() => onChoose("tuali")}
+            style={{
+              ...btnBase,
+              background: "linear-gradient(to right, #E4002B, #F16321)",
+              color: "white",
+              border: "none",
+              backdropFilter: "none",
+            }}
+            onMouseEnter={(event) => {
+              event.currentTarget.style.transform = "scale(1.02)"
+            }}
+            onMouseLeave={(event) => {
+              event.currentTarget.style.transform = "scale(1)"
+            }}
+          >
+            <span>Continuar solo con Tuali</span>
+            <span>→</span>
+          </button>
+          {[
+            { label: "Yomp!", preset: "yomp" },
+            { label: "Terminal de pago", preset: "terminal" },
+            { label: "Ingresar datos manualmente", preset: "manual" },
+          ].map((option) => (
+            <button
+              key={option.label}
+              type="button"
+              onClick={() => onChoose(option.preset)}
+              style={btnBase}
+              onMouseEnter={(event) => {
+                event.currentTarget.style.background = "rgba(228,0,43,0.08)"
+                event.currentTarget.style.borderColor = "#E4002B"
+              }}
+              onMouseLeave={(event) => {
+                event.currentTarget.style.background = "rgba(255,255,255,0.5)"
+                event.currentTarget.style.borderColor = "rgba(228,0,43,0.4)"
+              }}
+            >
+              <span>{option.label}</span>
+              <span style={{ color: "#E4002B" }}>→</span>
+            </button>
+          ))}
+        </div>
       </GlassCard>
     </div>
   )
@@ -999,5 +1042,4 @@ function MetricMiniCard({ label, value }) {
       <p style={{ margin: 0, color: "#1A1A1A", fontSize: "22px", fontWeight: "900" }}>{value}</p>
     </div>
   )
-}
 }
