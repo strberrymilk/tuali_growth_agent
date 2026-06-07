@@ -1,0 +1,34 @@
+{
+  "TUALI_FE_88321": {
+    "store_profile": {
+      "store_name": "Abarrotes Chabelita",
+      "segment": "Abarrotes",
+      "city": "Mazatlan"
+    },
+    "available_promotions": [
+      {
+        "title": "Combo refresco + botana",
+        "description": "Combina refrescos y botanas con alta rotacion para elevar el ticket promedio.",
+        "category_focus": ["Refrescos", "Botanas"]
+      },
+      {
+        "title": "Promo jugos de baja rotacion",
+        "description": "Usa una promocion puntual para mover inventario estancado de jugos.",
+        "category_focus": ["Jugos"]
+      }
+    ],
+    "loyalty_status": {
+      "program_name": "Gana Coca-Cola",
+      "points_balance": 1450,
+      "tier": "oro",
+      "next_reward": "Canje por productos Coca-Cola"
+    },
+    "active_goal": {
+      "goal_name": "Meta diaria de ventas",
+      "metric": "ventas",
+      "target_value": 10800,
+      "period": "daily",
+      "currency": "MXN"
+    }
+  }
+}

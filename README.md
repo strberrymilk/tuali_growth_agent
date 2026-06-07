@@ -57,15 +57,24 @@ Files and folders that should stay out of version control, such as virtual envir
 
 ## MongoDB Setup
 
-For two sister-company databases in the same MongoDB cluster, use one shared URI and two database names in `.env`:
+Tuali and Yomp are configured as separate MongoDB clusters.
+
+Use these variables in `.env`:
 
 ```env
-MONGO_URI=mongodb+srv://<user>:<password>@<cluster-url>/?retryWrites=true&w=majority
-MONGO_DB_COMPANY_ONE=company_one
-MONGO_DB_COMPANY_TWO=company_two
+MONGODB_URI_ALY=mongodb+srv://<user>:<password>@<tuali-cluster>/?retryWrites=true&w=majority
+MONGODB_ALY=aly_ai
+
+MONGODB_URI_YOMP=mongodb+srv://<user>:<password>@<yomp-cluster>/?retryWrites=true&w=majority
+MONGODB_YOMP=yomp_pos_db
 ```
 
-Backend connection helper lives in `backend/database/mongo.py`.
+Notes:
+
+- `MONGODB_URI_ALY` is used as the Tuali cluster connection.
+- `MONGODB_URI_YOMP` is used for Yomp sales and inventory data.
+- `backend/database/mongo.py` supports these current names and also accepts `MONGODB_URI_TUALI` / `MONGODB_TUALI` as aliases.
+- Yomp analysis will use live DB data when available and fall back to `mock_data/yomp_mock.json` only if needed for demo continuity.
 
 ## Yomp Mock Endpoints
 
@@ -75,11 +84,30 @@ Run the backend with:
 uvicorn backend.main:app --reload
 ```
 
+Run the frontend with:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Local app URLs:
+
+```text
+Frontend: http://localhost:5173
+Backend: http://127.0.0.1:8000
+```
+
 Available demo endpoints:
 
 ```text
 GET /health
+GET /agent/tools
+POST /agent/run/{tuali_cliente_id}
+GET /agent/recommendations/{tuali_cliente_id}
 GET /tts/test-page
+POST /tts/generate
 POST /tts/preview
 GET /yomp/{tuali_cliente_id}/transactions
 GET /yomp/{tuali_cliente_id}/inventory
@@ -109,3 +137,40 @@ py -m backend.services.tts_demo
 ```
 
 The demo generates an MP3 file in `generated_audio/` and prints the saved file path.
+
+## Gemini Setup
+
+Set these variables in `.env` to enable live Gemini synthesis:
+
+```env
+GEMINI_API_KEY=your_api_key
+GEMINI_MODEL_ID=gemini-2.5-flash
+```
+
+Notes:
+
+- The agent keeps its rule-based business signals even if Gemini is disabled.
+- Gemini is used as a synthesis layer for `message`, `headline`, prioritized recommendations, and `voice_text`.
+- If `GEMINI_API_KEY` is missing or the API fails, `/agent/run/{tuali_cliente_id}` still returns a successful fallback response.
+- You can see whether Gemini ran in live mode or fallback mode in `data_sources`, using `source="gemini_synthesis"` and `mode="live"` or `mode="fallback"`.
+
+## MCP-Like Tool Layer
+
+The backend uses a lightweight MCP-like structure:
+
+```text
+Agent / Allie
+-> backend/mcp/tools.py
+-> backend/services/*
+-> MongoDB / Gemini / ElevenLabs
+```
+
+Current MCP-like tools include:
+
+- `get_tuali_profile(tuali_cliente_id)`
+- `get_active_goal(tuali_cliente_id)`
+- `get_available_promotions(tuali_cliente_id)`
+- `get_loyalty_status(tuali_cliente_id)`
+- `get_yomp_growth_context(tuali_cliente_id)`
+- `save_recommendation(tuali_cliente_id, recommendation)`
+- `get_recommendations(tuali_cliente_id)`

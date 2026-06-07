@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Nunito', sans-serif;
+}
+
+.btn-gradient {
+  border: 2px solid transparent;
+  background-image: linear-gradient(white, white), linear-gradient(to right, #E4002B, #F16321);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+.btn-gradient.selected {
+  background-image: linear-gradient(to right, #E4002B, #F16321), linear-gradient(to right, #E4002B, #F16321);
+  color: white;
+}
+
+.btn-gradient {
+  border: 2px solid transparent;
+  background-image: linear-gradient(white, white), linear-gradient(to right, #E4002B, #F16321);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  transition: all 0.2s ease;
+  transform: scale(1);
+}
+
+.btn-gradient:hover {
+  background-image: linear-gradient(to right, #E4002B, #F16321), linear-gradient(to right, #E4002B, #F16321);
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(228, 0, 43, 0.3);
+}
+
+.btn-gradient.selected {
+  background-image: linear-gradient(to right, #E4002B, #F16321), linear-gradient(to right, #E4002B, #F16321);
+  color: white;
+  transform: scale(1.02);
+}
+
+.btn-gradient {
+  border: 2px solid #E4002B;
+  background: white;
+  color: #1A1A1A;
+  transition: all 0.2s ease;
+}
+
+.btn-gradient:hover {
+  background: linear-gradient(to right, #E4002B, #F16321);
+  color: white;
+  transform: scale(1.05);
+  border: none;
+  box-shadow: 0 4px 15px rgba(228, 0, 43, 0.3);
+}
+
+.btn-gradient.selected {
+  background: linear-gradient(to right, #E4002B, #F16321);
+  color: white;
+  border: none;
+}
+
+.btn-siguiente {
+  background: linear-gradient(to right, #E4002B, #F16321);
+  color: white;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.btn-siguiente:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 15px rgba(228, 0, 43, 0.4);
+  opacity: 0.95;
+}

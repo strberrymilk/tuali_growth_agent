@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException
 from fastapi.responses import HTMLResponse, Response
 from pydantic import BaseModel
 
-from backend.services.tts_service import generate_elevenlabs_speech_bytes
+from backend.services.tts_service import generate_elevenlabs_speech_bytes, generate_tts
 
 
 router = APIRouter(prefix="/tts", tags=["tts"])
@@ -137,3 +137,19 @@ def generate_tts_preview(payload: TTSRequest) -> Response:
         raise HTTPException(status_code=502, detail=f"ElevenLabs request failed: {error}") from error
 
     return Response(content=audio, media_type="audio/mpeg")
+
+
+@router.post("/generate")
+def generate_tts_file(payload: TTSRequest) -> dict[str, str]:
+    try:
+        file_path = generate_tts(payload.text)
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error)) from error
+    except Exception as error:
+        raise HTTPException(status_code=502, detail=f"ElevenLabs request failed: {error}") from error
+
+    return {
+        "status": "success",
+        "message": "Audio generated successfully.",
+        "file_path": file_path,
+    }

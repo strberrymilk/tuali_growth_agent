@@ -1,42 +1,94 @@
+from __future__ import annotations
+
 import os
 
 from dotenv import load_dotenv
 from pymongo import MongoClient
+from pymongo.collection import Collection
 from pymongo.database import Database
+
 
 load_dotenv()
 
-MONGO_URI = os.getenv("MONGO_URI", "")
-MONGO_DB_COMPANY_ONE = os.getenv("MONGO_DB_COMPANY_ONE", "")
-MONGO_DB_COMPANY_TWO = os.getenv("MONGO_DB_COMPANY_TWO", "")
 
-mongo_client: MongoClient | None = None
+def _get_env(*names: str) -> str:
+    for name in names:
+        value = os.getenv(name, "").strip()
+        if value:
+            return value
+    return ""
 
-def get_mongo_client() -> MongoClient:
-    global mongo_client
 
-    if not MONGO_URI:
-        raise ValueError("Missing MONGO_URI in environment variables.")
+TUALI_URI = _get_env("MONGODB_URI_TUALI", "MONGODB_URI_ALY")
+TUALI_DB_NAME = _get_env("MONGODB_TUALI", "MONGODB_ALY")
+YOMP_URI = _get_env("MONGODB_URI_YOMP")
+YOMP_DB_NAME = _get_env("MONGODB_YOMP")
 
-    if mongo_client is None:
-        mongo_client = MongoClient(MONGO_URI)
+_tuali_client: MongoClient | None = None
+_yomp_client: MongoClient | None = None
 
-    return mongo_client
+
+def get_tuali_mongo_client() -> MongoClient:
+    global _tuali_client
+
+    if not TUALI_URI:
+        raise ValueError(
+            "Missing Tuali Mongo URI. Set MONGODB_URI_TUALI or MONGODB_URI_ALY in environment variables."
+        )
+
+    if _tuali_client is None:
+        _tuali_client = MongoClient(TUALI_URI)
+
+    return _tuali_client
+
+
+def get_yomp_mongo_client() -> MongoClient:
+    global _yomp_client
+
+    if not YOMP_URI:
+        raise ValueError("Missing Yomp Mongo URI. Set MONGODB_URI_YOMP in environment variables.")
+
+    if _yomp_client is None:
+        _yomp_client = MongoClient(YOMP_URI)
+
+    return _yomp_client
+
+
+def get_tuali_db() -> Database:
+    if not TUALI_DB_NAME:
+        raise ValueError(
+            "Missing Tuali database name. Set MONGODB_TUALI or MONGODB_ALY in environment variables."
+        )
+
+    return get_tuali_mongo_client()[TUALI_DB_NAME]
+
+
+def get_yomp_db() -> Database:
+    if not YOMP_DB_NAME:
+        raise ValueError("Missing Yomp database name. Set MONGODB_YOMP in environment variables.")
+
+    return get_yomp_mongo_client()[YOMP_DB_NAME]
+
+
+def get_tuali_collection(collection_name: str) -> Collection:
+    return get_tuali_db()[collection_name]
+
+
+def get_yomp_collection(collection_name: str) -> Collection:
+    return get_yomp_db()[collection_name]
+
 
 def get_company_one_db() -> Database:
-    if not MONGO_DB_COMPANY_ONE:
-        raise ValueError("Missing MONGO_DB_COMPANY_ONE in environment variables.")
+    return get_tuali_db()
 
-    return get_mongo_client()[MONGO_DB_COMPANY_ONE]
 
 def get_company_two_db() -> Database:
-    if not MONGO_DB_COMPANY_TWO:
-        raise ValueError("Missing MONGO_DB_COMPANY_TWO in environment variables.")
+    return get_yomp_db()
 
-    return get_mongo_client()[MONGO_DB_COMPANY_TWO]
 
-def get_company_one_collection(collection_name: str):
-    return get_company_one_db()[collection_name]
+def get_company_one_collection(collection_name: str) -> Collection:
+    return get_tuali_collection(collection_name)
 
-def get_company_two_collection(collection_name: str):
-    return get_company_two_db()[collection_name]
+
+def get_company_two_collection(collection_name: str) -> Collection:
+    return get_yomp_collection(collection_name)
