@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -18,6 +18,30 @@ class AgentToolDescriptor(BaseModel):
 
 class AgentRunRequest(BaseModel):
     selected_tools: list[str] = Field(default_factory=list)
+
+
+class AgentChatMessage(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    role: Literal["user", "assistant"]
+    text: str
+
+
+class AgentChatRequest(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    message: str
+    report_context: dict[str, Any] = Field(default_factory=dict)
+    history: list[AgentChatMessage] = Field(default_factory=list)
+
+
+class AgentChatResponse(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    status: Literal["success"]
+    message: str
+    source_mode: Literal["live", "fallback"]
+    model_id: str | None = None
 
 
 class AgentRecommendation(BaseModel):

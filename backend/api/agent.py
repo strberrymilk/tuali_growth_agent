@@ -4,7 +4,8 @@ from fastapi import APIRouter, Body, Query
 
 from agent.recommendation_service import run_allie_agent
 from mcp.tools import get_mcp_tools, get_recommendations
-from models import AgentRunRequest, AgentRunResponse, StoredRecommendation
+from models import AgentChatRequest, AgentChatResponse, AgentRunRequest, AgentRunResponse, StoredRecommendation
+from services.gemini_service import chat_with_growth_context
 
 
 router = APIRouter(prefix="/agent", tags=["agent"])
@@ -22,6 +23,26 @@ def run_agent(
 ) -> AgentRunResponse:
     selected_tools = payload.selected_tools if payload else None
     return run_allie_agent(tuali_cliente_id, selected_tools)
+
+
+@router.post("/chat/{tuali_cliente_id}", response_model=AgentChatResponse)
+def chat_with_agent(
+    tuali_cliente_id: str,
+    payload: AgentChatRequest,
+) -> AgentChatResponse:
+    result = chat_with_growth_context(
+        tuali_cliente_id=tuali_cliente_id,
+        report_context=payload.report_context,
+        user_message=payload.message,
+        history=[message.model_dump() for message in payload.history],
+    )
+
+    return AgentChatResponse(
+        status="success",
+        message=result.message,
+        source_mode=result.mode,
+        model_id=result.model_id,
+    )
 
 
 @router.get("/recommendations/{tuali_cliente_id}", response_model=list[StoredRecommendation])

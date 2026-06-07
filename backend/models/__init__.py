@@ -1,4 +1,7 @@
 from .agent import (
+    AgentChatMessage,
+    AgentChatRequest,
+    AgentChatResponse,
     AgentDataSource,
     AgentRecommendation,
     AgentRunRequest,
@@ -25,6 +28,9 @@ from .yomp import (
 
 __all__ = [
     "AgentDataSource",
+    "AgentChatMessage",
+    "AgentChatRequest",
+    "AgentChatResponse",
     "AgentRecommendation",
     "AgentRunRequest",
     "AgentRunResponse",
