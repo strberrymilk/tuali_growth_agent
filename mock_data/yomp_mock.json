@@ -1,0 +1,125 @@
+{
+  "TUALI_FE_88321": {
+    "transacciones_caja": [
+      {
+        "tuali_cliente_id": "TUALI_FE_88321",
+        "folio_ticket": "YOMP-1001",
+        "fecha_hora": "2026-06-06T09:14:00",
+        "metodo_pago": "efectivo",
+        "productos_vendidos": [
+          {
+            "codigo_barras": "7501055300011",
+            "nombre": "Coca-Cola Original 600ml",
+            "categoria": "Refrescos",
+            "cantidad": 2,
+            "precio_unitario": 19
+          },
+          {
+            "codigo_barras": "7501000123456",
+            "nombre": "Sabritas Clasicas 45g",
+            "categoria": "Botanas",
+            "cantidad": 1,
+            "precio_unitario": 18
+          }
+        ],
+        "total_ticket": 56
+      },
+      {
+        "tuali_cliente_id": "TUALI_FE_88321",
+        "folio_ticket": "YOMP-1002",
+        "fecha_hora": "2026-06-06T11:02:00",
+        "metodo_pago": "tarjeta",
+        "productos_vendidos": [
+          {
+            "codigo_barras": "7501055300011",
+            "nombre": "Coca-Cola Original 600ml",
+            "categoria": "Refrescos",
+            "cantidad": 1,
+            "precio_unitario": 19
+          },
+          {
+            "codigo_barras": "7503009876543",
+            "nombre": "Monster Energy Original 473ml",
+            "categoria": "Energeticos",
+            "cantidad": 1,
+            "precio_unitario": 35
+          }
+        ],
+        "total_ticket": 54
+      }
+    ],
+    "inventario_tienda": {
+      "tuali_cliente_id": "TUALI_FE_88321",
+      "ultima_actualizacion": "2026-06-06T18:00:00",
+      "productos": [
+        {
+          "codigo_barras": "7501055300011",
+          "nombre": "Coca-Cola Original 600ml",
+          "stock_actual": 18,
+          "stock_minimo": 12,
+          "precio_venta_publico": 19
+        },
+        {
+          "codigo_barras": "7503009876543",
+          "nombre": "Monster Energy Original 473ml",
+          "stock_actual": 1,
+          "stock_minimo": 10,
+          "precio_venta_publico": 35
+        },
+        {
+          "codigo_barras": "7502001234567",
+          "nombre": "Jugos Del Valle Durazno 1L",
+          "stock_actual": 7,
+          "stock_minimo": 5,
+          "precio_venta_publico": 28
+        }
+      ]
+    },
+    "reporte_ventas_diario": {
+      "tuali_cliente_id": "TUALI_FE_88321",
+      "fecha": "2026-06-06",
+      "total_venta_dinero": 8450,
+      "total_tickets_emitidos": 142,
+      "ticket_promedio_dia": 59.5,
+      "metodos_pago_resumen": {
+        "efectivo": 5200,
+        "tarjeta": 3250
+      },
+      "meta_progreso_porcentaje": 78.3
+    },
+    "reporte_producto_diario": {
+      "tuali_cliente_id": "TUALI_FE_88321",
+      "fecha": "2026-06-06",
+      "productos_mas_vendidos": [
+        {
+          "nombre": "Coca-Cola Original 600ml",
+          "unidades_vendidas": 48,
+          "total_ingreso": 912
+        },
+        {
+          "nombre": "Sabritas Clasicas 45g",
+          "unidades_vendidas": 31,
+          "total_ingreso": 558
+        }
+      ],
+      "productos_estancados": [
+        {
+          "nombre": "Jugos Del Valle Durazno 1L",
+          "unidades_sin_movimiento_dias": 5
+        }
+      ],
+      "resumen_categorias": [
+        {
+          "categoria": "Refrescos",
+          "unidades_totales": 110,
+          "total_ingreso": 2450
+        },
+        {
+          "categoria": "Botanas",
+          "unidades_totales": 72,
+          "total_ingreso": 1296
+        }
+      ]
+    }
+  }
+}

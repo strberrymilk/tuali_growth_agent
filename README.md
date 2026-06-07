@@ -54,3 +54,58 @@ Main Python dependencies for the project.
 
 ### `.gitignore`
 Files and folders that should stay out of version control, such as virtual environments and cache files.
+
+## MongoDB Setup
+
+For two sister-company databases in the same MongoDB cluster, use one shared URI and two database names in `.env`:
+
+```env
+MONGO_URI=mongodb+srv://<user>:<password>@<cluster-url>/?retryWrites=true&w=majority
+MONGO_DB_COMPANY_ONE=company_one
+MONGO_DB_COMPANY_TWO=company_two
+```
+
+Backend connection helper lives in `backend/database/mongo.py`.
+
+## Yomp Mock Endpoints
+
+Run the backend with:
+
+```bash
+uvicorn backend.main:app --reload
+```
+
+Available demo endpoints:
+
+```text
+GET /health
+GET /tts/test-page
+POST /tts/preview
+GET /yomp/{tuali_cliente_id}/transactions
+GET /yomp/{tuali_cliente_id}/inventory
+GET /yomp/{tuali_cliente_id}/daily-sales
+GET /yomp/{tuali_cliente_id}/daily-products
+GET /yomp/{tuali_cliente_id}/growth-context
+```
+
+Demo client id available in mock data:
+
+```text
+TUALI_FE_88321
+```
+
+To test ElevenLabs text-to-speech, set these variables in `.env`:
+
+```env
+ELEVENLABS_API_KEY=your_api_key
+ELEVENLABS_VOICE_ID=JBFqnCBsd6RMkjVDRZzb
+ELEVENLABS_MODEL_ID=eleven_multilingual_v2
+```
+
+Local SDK demo:
+
+```bash
+py -m backend.services.tts_demo
+```
+
+The demo generates an MP3 file in `generated_audio/` and prints the saved file path.
